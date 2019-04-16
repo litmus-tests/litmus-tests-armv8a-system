@@ -1,0 +1,21 @@
+AArch64 MP.RF+dc-dsb+ctrl-isb
+
+{
+int64_t x;
+0:X0=0x14000001; 0:X1=P1:L4; 0:X3=x;
+1:X2=x;
+}
+ P0             | P1          ;
+   STR W0,[X1]  | MOV X9,#0   ;
+   DC CVAU,X1   | L3:         ;
+   DSB ISH      | LDR X1,[X2] ;
+   NOP          | CBZ X1,L3   ;
+   DSB ISH      | ISB         ;
+   MOV X2,#1    | L4:         ;
+   STR X2,[X3]  | B Lfail     ;
+                | B Lout      ;
+                | Lfail:      ;
+                | MOV X9,#1   ;
+                | Lout:       ;
+
+exists 1:X9=1

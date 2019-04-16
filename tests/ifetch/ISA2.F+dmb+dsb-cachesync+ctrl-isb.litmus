@@ -1,0 +1,25 @@
+AArch64 ISA2+dmb+dsb-cachesync+ctrl-isb
+
+
+{
+int64_t x;
+int64_t y;
+0:X0=0x14000001; 0:X1=P2:L1; 0:X3=x;
+1:X1=P2:L1; 1:X3=x; 1:X5=y;
+2:X5=y;
+}
+
+
+ P0         |   P1           |   P2         ;
+STR W0,[X1] |  LDR X0,[X3]   |  LDR X0,[X5] ;
+DMB SY      |  DSB ISH       |  CBZ X0,LC00 ;
+MOV X2,#1   |  DC CVAU,X1    |  LC00:       ;
+STR X2,[X3] |  DSB ISH       |  ISB         ;
+            |  IC IVAU,X1    |  L1:         ;
+            |  DSB ISH       |  B Lfail     ;
+            |  MOV X4,#1     |  MOV X9,#1   ;
+            |  STR X4,[X5]   |  B Lout      ;
+            |                |  Lfail:      ;
+            |                |  MOV X9,#0   ;
+            |                |  Lout:       ;
+exists 1:X0=1 /\ 2:X0=1 /\ 2:X9=0
