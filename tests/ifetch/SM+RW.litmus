@@ -1,0 +1,31 @@
+AArch64 SM+RW
+
+(* 0x14000000 = B +0 *)
+
+{
+int64_t x;
+0:X0=0x14000005; 0:X1=P0:L3; 0:X3=x;
+1:X1=P0:L3; 1:X2=0x14000001; 1:X6=x;
+}
+
+ P0             | P1             ;
+   STR W0, [X1] | LDR W0,[X1]    ;
+   LDR X2, [X3] | STR W2,[X1]    ;
+   DMB SY       | LDR X3,[X1]    ;
+   DC CVAU, X1  | EOR X4,X3,X3   ;
+   DSB ISH      | MOV X5,#1      ;
+   IC IVAU, X1  | STR X5,[X6,X4] ;
+   DSB ISH      |                ;
+   ISB          |                ;
+L3:             |                ;
+   B Lfail      |                ;
+   MOV X9,#3    |                ;
+   B Lout       |                ;
+Lfail:          |                ;
+   MOV X9,#1    |                ;
+   B Lout       |                ;
+Lfail2:         |                ;
+   MOV X9,#2    |                ;
+   B Lout       |                ;
+Lout:           |                ;
+exists (0:X2=1 /\ 1:X0=0x1400003 /\ 1:X3=0x14000005 /\ 0:X9=2)

@@ -1,0 +1,23 @@
+AArch64 MP.FF+cachesync+po
+
+(* 0x14000001 = B +1 *)
+
+{
+0:X1=0x14000001; 0:X3=P1:L3; 0:X2=P1:L2;
+}
+ P0            | P1          ;
+  STR W1, [X3] | MOV X9, #1  ;
+  DC CVAU, X3  | MOV X10, #1 ;
+  DSB ISH      | L2:         ;
+  IC IVAU, X3  | B Lfail_L2  ;
+  DSB ISH      | L3:         ;
+  STR W1, [X2] | B Lfail_L3  ;
+               | B Lout      ;
+               | Lfail_L2:   ;
+               | MOV X9, #0  ;
+               | B L3        ;
+               | Lfail_L3:   ;
+               | MOV X10, #0 ;
+               | B Lout      ;
+               | Lout:       ;
+~exists (1:X9=1 /\ 1:X10=0)

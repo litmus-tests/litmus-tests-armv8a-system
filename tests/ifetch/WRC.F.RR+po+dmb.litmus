@@ -1,0 +1,25 @@
+AArch64 WRC.F.RR+po+dmb
+
+{
+int64_t x;
+0:X0=0x14000001; 0:X1=P1:L2;
+1:X2=x;
+2:X2=x; 2:X4=P1:L2;
+}
+ P0          | P1           | P2           ;
+STR W0, [X1] | BL L2        | LDR X1, [X2] ;
+             | B Lafter     | DMB ISH      ;
+             | L2:          | LDR X3, [X4] ;
+             | B Lfail_L2   |              ;
+             | MOV X9, #0   |              ;
+             | RET          |              ;
+             | Lfail_L2:    |              ;
+             | MOV X9, #1   |              ;
+             | RET          |              ;
+             | Lafter:      |              ;
+             | MOV X1, #1   |              ;
+             | STR X1, [X2] |              ;
+             | Lend:        |              ;
+
+exists 1:X9=0 /\ 2:X1=1 /\ 2:X3=0x14000003
+

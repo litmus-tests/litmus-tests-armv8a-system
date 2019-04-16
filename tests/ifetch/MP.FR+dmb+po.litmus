@@ -1,0 +1,18 @@
+AArch64 MP.FR+dmb+po
+
+{
+int64_t x;
+0:X1=x; 0:X3=P0:L1; 0:X3=0x14000001; 0:X4=P1:L2;
+1:X1=x;
+}
+ P0             | P1            ;
+  MOV W0, #1    | MOV X10, #0   ;
+  STR W0, [X1]  | L2:           ;
+  DMB SY        | B Lfail_L2    ;
+  STR W2, [X4]  | MOV X9, #1    ;
+                | LDR X10, [X1] ;
+                | B Lout        ;
+                | Lfail_L2:     ;
+                | MOV X9, #0    ;
+                | Lout:         ;
+~exists (1:X9=1 /\ 1:X10=0)

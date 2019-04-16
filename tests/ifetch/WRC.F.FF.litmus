@@ -1,0 +1,23 @@
+AArch64 WRC.F.FF
+
+Stable=X9
+
+{
+0:X0=0x14000001; 0:X1=P1:L2;
+1:X0=0x14000001; 1:X1=P2:L3;
+2:X1=P1:L2;
+}
+ P0            | P1           | P2         ;
+STR W0, [X1]   | BL L2        | L3:        ;
+               | STR W0, [X1] | B Lfail_L3 ;
+               | B Lout       | MOV X8, #1 ;
+               | L2:          | BLR X1     ;
+               | B Lfail_L2   | B L2out    ;
+               | MOV X9, #1   | Lfail_L3:  ;
+               | RET          | MOV X8, #0 ;
+               | Lfail_L2:    | L2out:     ;
+               | MOV X9, #0   |            ;
+               | RET          |            ;
+               | Lout:        |            ;
+(* need the 1:X9 here to make test not crash *)
+exists (1:X9=1 /\ 2:X8=1 /\ 2:X9=0)

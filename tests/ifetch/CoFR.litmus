@@ -1,0 +1,16 @@
+AArch64 CoFR
+
+{
+0:X0=0x14000001; 0:X1=P1:L1;
+1:X1=P1:L1;
+}
+ P0            |  P1             ;
+   STR W0,[X1] | L1:             ;
+               |    B Lfail      ;
+               |    MOV X9,#1    ;
+               |    B Lover      ;
+               | Lfail:          ;
+               |    MOV X9,#0    ;
+               | Lover:          ;
+               |    LDR W10,[X1] ;
+~exists (1:X9=1 /\ 1:X10=0x14000003)
