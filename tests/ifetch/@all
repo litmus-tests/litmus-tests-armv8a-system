@@ -17,6 +17,7 @@ MP.RF+cachesync+ctrl.litmus
 MP.RF+dc+ctrl-isb.litmus
 MP.RF+dc-dmb+ctrl-isb.litmus
 MP.RF+dc-dsb+ctrl-isb.litmus
+MP.RF+dc-dsb-ic-dsbnsh+ctrl-isb.litmus
 MP.RFF+dc-dsb+ctrl-isb-isb.litmus
 MP.RFF+dc-dsb+ctrl-isb.litmus
 MP.RF+ic+ctrlisb.litmus
@@ -24,7 +25,9 @@ MP.R.RF+addr-cachesync+dmb+ctrl-isb.litmus
 SM+cachesync-isb.litmus
 SM+cachesync.litmus
 SM+dc-dmb-ic-dmb-isb.litmus
+SM+dsb-isb.litmus
 SM.F+ic.litmus
+SM+isb.litmus
 SM.litmus
 SM+RW.litmus
 SM+RW+RW.litmus

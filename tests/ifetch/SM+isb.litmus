@@ -1,15 +1,10 @@
-AArch64 SM+dc-dmb-ic-dmb-isb
-
+AArch64 SM+isb
 
 {
 0:X0=0x14000001; 0:X1=P0:L1;
 }
  P0           ;
   STR W0,[X1] ;
-  DC CVAU,X1  ;
-  DMB SY      ;
-  IC IVAU,X1  ;
-  DMB SY      ;
   ISB         ;
 L1:           ;
   B Lfail     ;
