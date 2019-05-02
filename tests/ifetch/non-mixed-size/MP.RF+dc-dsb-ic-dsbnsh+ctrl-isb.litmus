@@ -18,4 +18,4 @@ int64_t x;
                | MOV X9,#1   ;
                | Lout:       ;
 
-~exists 1:X9=1
+exists 1:X9=1
