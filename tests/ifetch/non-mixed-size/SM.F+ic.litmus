@@ -17,6 +17,7 @@ LC00:            | MOV X2,#1   ;
    BL L1         |             ;
    B Lout        |             ;
 L1:              |             ;
+   B Lfail       |             ;
    MOV X9,#1     |             ;
    RET           |             ;
 Lfail:           |             ;
