@@ -1,4 +1,5 @@
 CoFF.branches.litmus
+CoFF-isb.litmus
 CoFF.litmus
 CoFR.litmus
 CoRF+ctrl-isb.litmus
