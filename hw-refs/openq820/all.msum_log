@@ -1,0 +1,498 @@
+Test CoFF Allow
+Histogram (3 states)
+560845316:> 1:X8=0; 1:X9=0;
+32108   :> 1:X8=0; 1:X9=1;
+39322576:> 1:X8=1; 1:X9=1;
+No
+Witnesses
+Positive: 0 Negative: 600200000
+Condition exists (1:X8=1 /\ 1:X9=0) is not validated
+Hash=9f83a15fb5e0546ea370f19eb6e17888
+Time CoFF 1278.48
+
+Test CoFF-isb Allow
+Histogram (3 states)
+504453874:> 1:X8=0; 1:X9=0;
+315549  :> 1:X8=0; 1:X9=1;
+95430577:> 1:X8=1; 1:X9=1;
+No
+Witnesses
+Positive: 0 Negative: 600200000
+Condition exists (1:X8=1 /\ 1:X9=0) is not validated
+Hash=3135112acb4eec6177d3b4980abb851f
+Time CoFF-isb 1333.84
+
+Test CoFF.branches Allow
+Histogram (2 states)
+553222989:> 1:X8=0; 1:X9=0;
+46977011:> 1:X8=0; 1:X9=1;
+No
+Witnesses
+Positive: 0 Negative: 600200000
+Condition exists (1:X8=1 /\ 1:X9=0) is not validated
+Hash=6ff1b3f3f0263b18c430b4f42354c812
+Time CoFF.branches 1191.74
+
+Test CoFR Forbid
+Histogram (3 states)
+113198601:> 1:X10=335544321; 1:X9=0;
+23511391:> 1:X10=335544321; 1:X9=1;
+463490008:> 1:X10=335544323; 1:X9=0;
+Ok
+Witnesses
+Positive: 600200000 Negative: 0
+Condition ~exists (1:X9=1 /\ 1:X10=335544323) is validated
+Hash=6795dd9fd2f36af6c8678a21fcaa394c
+Time CoFR 1112.26
+
+Test CoRF Allow
+Histogram (4 states)
+104678629:> 1:X10=0; 1:X9=335544321;
+469087424:> 1:X10=0; 1:X9=335544323;
+26409478:> 1:X10=1; 1:X9=335544321;
+24469   :> 1:X10=1; 1:X9=335544323;
+Ok
+Witnesses
+Positive: 104678629 Negative: 495521371
+Condition exists (1:X9=335544321 /\ 1:X10=0) is validated
+Hash=14ee249f478b2d480ddf938bd04cb118
+Time CoRF 1229.13
+
+Test CoRF+ctrl-isb Allow
+Histogram (2 states)
+566315639:> 1:X10=0; 1:X9=335544321;
+33884361:> 1:X10=1; 1:X9=335544321;
+Ok
+Witnesses
+Positive: 566315639 Negative: 33884361
+Condition exists (1:X9=335544321 /\ 1:X10=0) is validated
+Hash=ca4be9a96e9d818709baa9e4758622f4
+Time CoRF+ctrl-isb 1504.04
+
+Test FOW Allow
+Histogram (1 states)
+290100000:> 1:X9=2; 2:X9=2; 3:X9=2;
+No
+Witnesses
+Positive: 0 Negative: 290100000
+Condition exists (1:X9=0 /\ 2:X9=1 /\ 3:X9=2 \/ 1:X9=0 /\ 2:X9=2 /\ 3:X9=1 \/ 1:X9=1 /\ 2:X9=2 /\ 3:X9=0 \/ 1:X9=1 /\ 2:X9=0 /\ 3:X9=2 \/ 1:X9=2 /\ 2:X9=0 /\ 3:X9=1 \/ 1:X9=2 /\ 2:X9=1 /\ 3:X9=0) is not validated
+Hash=a2a999b25e4b04c2dba5a93d4d1d1b55
+Time FOW 957879.20
+
+Test ISA2+dmb+cachesync+ctrl-isb Allow
+Histogram (7 states)
+100098253:> 1:X0=0; 2:X0=0; 2:X9=0;
+12823407:> 1:X0=0; 2:X0=0; 2:X9=1;
+431946  :> 1:X0=0; 2:X0=1; 2:X9=0;
+1901110 :> 1:X0=0; 2:X0=1; 2:X9=1;
+145986237:> 1:X0=1; 2:X0=0; 2:X9=0;
+17928594:> 1:X0=1; 2:X0=0; 2:X9=1;
+930453  :> 1:X0=1; 2:X0=1; 2:X9=1;
+No
+Witnesses
+Positive: 0 Negative: 280100000
+Condition exists (1:X0=1 /\ 2:X0=1 /\ 2:X9=0) is not validated
+Hash=90dc7277bba86f07d31aafaf116f6a54
+Time ISA2+dmb+cachesync+ctrl-isb 12068.76
+
+Test ISA2+dmb+dsb-cachesync+ctrl-isb Forbid
+Histogram (7 states)
+83398655:> 1:X0=0; 2:X0=0; 2:X9=0;
+9894206 :> 1:X0=0; 2:X0=0; 2:X9=1;
+929610  :> 1:X0=0; 2:X0=1; 2:X9=0;
+2360561 :> 1:X0=0; 2:X0=1; 2:X9=1;
+162380475:> 1:X0=1; 2:X0=0; 2:X9=0;
+19559970:> 1:X0=1; 2:X0=0; 2:X9=1;
+1576523 :> 1:X0=1; 2:X0=1; 2:X9=1;
+Ok
+Witnesses
+Positive: 280100000 Negative: 0
+Condition ~exists (1:X0=1 /\ 2:X0=1 /\ 2:X9=0) is validated
+Hash=f70600a4c44b02f962b962198ea84fc1
+Time ISA2+dmb+dsb-cachesync+ctrl-isb 13034.11
+
+Test ISA2.F+dc-dmb+dsb-ic-dsb+ctrl-isb Allow
+Histogram (7 states)
+110227778:> 1:X0=0; 2:X0=0; 2:X9=0;
+12273543:> 1:X0=0; 2:X0=0; 2:X9=1;
+943236  :> 1:X0=0; 2:X0=1; 2:X9=0;
+2594356 :> 1:X0=0; 2:X0=1; 2:X9=1;
+144798395:> 1:X0=1; 2:X0=0; 2:X9=0;
+17862296:> 1:X0=1; 2:X0=0; 2:X9=1;
+1400396 :> 1:X0=1; 2:X0=1; 2:X9=1;
+No
+Witnesses
+Positive: 0 Negative: 290100000
+Condition exists (1:X0=1 /\ 2:X0=1 /\ 2:X9=0) is not validated
+Hash=859fbac7428df3f207ef219fec1cabee
+Time ISA2.F+dc-dmb+dsb-ic-dsb+ctrl-isb 16687.09
+
+Test ISA2.F+dc-dsb+dsb-ic-dsb+ctrl-isb Forbid
+Histogram (7 states)
+173115922:> 1:X0=0; 2:X0=0; 2:X9=0;
+15150498:> 1:X0=0; 2:X0=0; 2:X9=1;
+504568  :> 1:X0=0; 2:X0=1; 2:X9=0;
+1872575 :> 1:X0=0; 2:X0=1; 2:X9=1;
+83904887:> 1:X0=1; 2:X0=0; 2:X9=0;
+4909301 :> 1:X0=1; 2:X0=0; 2:X9=1;
+642249  :> 1:X0=1; 2:X0=1; 2:X9=1;
+Ok
+Witnesses
+Positive: 280100000 Negative: 0
+Condition ~exists (1:X0=1 /\ 2:X0=1 /\ 2:X9=0) is validated
+Hash=6f0773d9b15339868150a831e6ffa35c
+Time ISA2.F+dc-dsb+dsb-ic-dsb+ctrl-isb 12296.50
+
+Test MP.FF Allow
+Histogram (4 states)
+528979890:> 1:X10=0; 1:X9=0;
+41713   :> 1:X10=0; 1:X9=1;
+1497558 :> 1:X10=1; 1:X9=0;
+29680839:> 1:X10=1; 1:X9=1;
+Ok
+Witnesses
+Positive: 41713 Negative: 560158287
+Condition exists (1:X9=1 /\ 1:X10=0) is validated
+Hash=68c925d51e09388e445fef2cf3471d3c
+Time MP.FF 1078.03
+
+Test MP.FF+cachesync+po Forbid
+Histogram (3 states)
+497042949:> 1:X10=0; 1:X9=0;
+34935065:> 1:X10=1; 1:X9=0;
+28221986:> 1:X10=1; 1:X9=1;
+Ok
+Witnesses
+Positive: 560200000 Negative: 0
+Condition ~exists (1:X9=1 /\ 1:X10=0) is validated
+Hash=c62a14d4040c95404fe5e42d77d30756
+Time MP.FF+cachesync+po 1476.14
+
+Test MP.FF+dmb+po Allow
+Histogram (4 states)
+526066942:> 1:X10=0; 1:X9=0;
+4472    :> 1:X10=0; 1:X9=1;
+7249929 :> 1:X10=1; 1:X9=0;
+26878657:> 1:X10=1; 1:X9=1;
+Ok
+Witnesses
+Positive: 4472 Negative: 560195528
+Condition exists (1:X9=1 /\ 1:X10=0) is validated
+Hash=0414398ebc0d7207909e6db98156fe14
+Time MP.FF+dmb+po 1145.58
+
+Test MP.FR+dmb+po Forbid
+Histogram (2 states)
+539119236:> 1:X10=0; 1:X9=0;
+21080764:> 1:X10=1; 1:X9=1;
+Ok
+Witnesses
+Positive: 560200000 Negative: 0
+Condition ~exists (1:X9=1 /\ 1:X10=0) is validated
+Hash=b7e8f15893e64c870724c82ec170504d
+Time MP.FR+dmb+po 1191.03
+
+Test MP.R.RF+addr-cachesync+dmb+ctrl-isb Forbid
+Histogram (3 states)
+2       :> 1:X0=335544323; 2:X9=1;
+280099963:> 1:X0=335544323; 2:X9=2;
+35      :> 1:X0=335544323; 2:X9=3;
+Ok
+Witnesses
+Positive: 280100000 Negative: 0
+Condition ~exists (1:X0=20971525 /\ 2:X9=2) is validated
+Hash=2e580817efe45a1c226037ea01df3520
+Time MP.R.RF+addr-cachesync+dmb+ctrl-isb 17808.69
+
+Test MP.RF+cachesync+ctrl Allow
+Histogram (2 states)
+560197335:> 1:X9=0;
+2665    :> 1:X9=1;
+Ok
+Witnesses
+Positive: 2665 Negative: 560197335
+Condition exists (1:X9=1) is validated
+Hash=151ba02e731dcd832b26a918035add81
+Time MP.RF+cachesync+ctrl 1985.84
+
+Test MP.RF+cachesync+ctrl-isb Forbid
+Histogram (2 states)
+560199958:> 1:X9=0;
+42      :> 1:X9=1;
+No
+Witnesses
+Positive: 560199958 Negative: 42
+Condition ~exists (1:X9=1) is not validated
+Hash=7e3491d9c3577dcda15fec0100d6483e
+Time MP.RF+cachesync+ctrl-isb 1894.94
+
+Test MP.RF+dc+ctrl-isb Allow
+Histogram (2 states)
+41270902:> 1:X9=0;
+518929098:> 1:X9=1;
+Ok
+Witnesses
+Positive: 518929098 Negative: 41270902
+Condition exists (1:X9=1) is validated
+Hash=8848247fb4857f9f88600369ab18f8d7
+Time MP.RF+dc+ctrl-isb 1958.59
+
+Test MP.RF+dc-dmb+ctrl-isb Allow
+Histogram (2 states)
+49923732:> 1:X9=0;
+510276268:> 1:X9=1;
+Ok
+Witnesses
+Positive: 510276268 Negative: 49923732
+Condition exists (1:X9=1) is validated
+Hash=f2b80d07fc912bc48e0950b8fd6cc324
+Time MP.RF+dc-dmb+ctrl-isb 1747.21
+
+Test MP.RF+dc-dsb+ctrl-isb Allow
+Histogram (2 states)
+41256233:> 1:X9=0;
+518943767:> 1:X9=1;
+Ok
+Witnesses
+Positive: 518943767 Negative: 41256233
+Condition exists (1:X9=1) is validated
+Hash=8848247fb4857f9f88600369ab18f8d7
+Time MP.RF+dc-dsb+ctrl-isb 1715.82
+
+Test MP.RF+dc-dsb-ic-dsbnsh+ctrl-isb Allow
+Histogram (2 states)
+478614457:> 1:X9=0;
+81585543:> 1:X9=1;
+Ok
+Witnesses
+Positive: 81585543 Negative: 478614457
+Condition exists (1:X9=1) is validated
+Hash=dcaad69cdc1d3fce88df4877dfe110bb
+Time MP.RF+dc-dsb-ic-dsbnsh+ctrl-isb 1698.36
+
+Test MP.RF+ic+ctrl-isb Allow
+Histogram (2 states)
+560199974:> 1:X9=0;
+26      :> 1:X9=1;
+Ok
+Witnesses
+Positive: 26 Negative: 560199974
+Condition exists (1:X9=1) is validated
+Hash=1d0a75c4167e3459060d11fca4a6f2f4
+Time MP.RF+ic+ctrl-isb 2051.50
+
+Test MP.RFF+dc-dsb+ctrl-isb Allow
+Histogram (3 states)
+404060306:> 1:X8=1; 1:X9=1;
+162839  :> 1:X8=1; 1:X9=3;
+155976855:> 1:X8=3; 1:X9=3;
+No
+Witnesses
+Positive: 0 Negative: 560200000
+Condition exists (1:X8=3 /\ 1:X9=2) is not validated
+Hash=9deeae016198353155982c322e946940
+Time MP.RFF+dc-dsb+ctrl-isb 1753.88
+
+Test MP.RFF+dc-dsb+ctrl-isb-isb Allow
+Histogram (3 states)
+433087365:> 1:X8=1; 1:X9=1;
+315992  :> 1:X8=1; 1:X9=3;
+126796643:> 1:X8=3; 1:X9=3;
+No
+Witnesses
+Positive: 0 Negative: 560200000
+Condition exists (1:X8=3 /\ 1:X9=2) is not validated
+Hash=04fb154a88482cbd2fd6d1418111ac7e
+Time MP.RFF+dc-dsb+ctrl-isb-isb 1755.36
+
+Test SM Allow
+Histogram (2 states)
+1120388308:> 0:X9=0;
+11692   :> 0:X9=1;
+Ok
+Witnesses
+Positive: 1120388308 Negative: 11692
+Condition exists (0:X9=0) is validated
+Hash=117473cf72da078053e8e73af89bcdb5
+Time SM 299.01
+
+Test SM+RW Allow
+Histogram (9 states)
+76411573:> 0:X2=0; 0:X9=2; 1:X0=335544323; 1:X3=335544321;
+554823  :> 0:X2=0; 0:X9=2; 1:X0=335544323; 1:X3=335544325;
+29116618:> 0:X2=0; 0:X9=2; 1:X0=335544325; 1:X3=335544321;
+83495398:> 0:X2=0; 0:X9=3; 1:X0=335544323; 1:X3=335544321;
+70165377:> 0:X2=0; 0:X9=3; 1:X0=335544325; 1:X3=335544321;
+298447680:> 0:X2=1; 0:X9=2; 1:X0=335544323; 1:X3=335544321;
+10      :> 0:X2=1; 0:X9=2; 1:X0=335544323; 1:X3=335544325;
+2008022 :> 0:X2=1; 0:X9=3; 1:X0=335544323; 1:X3=335544321;
+499     :> 0:X2=1; 0:X9=3; 1:X0=335544325; 1:X3=335544321;
+No
+Witnesses
+Positive: 0 Negative: 560200000
+Condition exists (0:X2=1 /\ 1:X0=20971523 /\ 1:X3=335544325 /\ 0:X9=2) is not validated
+Hash=4b04dae721599d026c83c1779bc83187
+Time SM+RW 1552.38
+
+Test SM+RW+RW Allow
+Histogram (23 states)
+6109177 :> 0:X2=0; 0:X9=2; 1:X0=335544323; 2:X3=335544321;
+16919824:> 0:X2=0; 0:X9=2; 1:X0=335544323; 2:X3=335544323;
+5530746 :> 0:X2=0; 0:X9=2; 1:X0=335544323; 2:X3=335544325;
+1540784 :> 0:X2=0; 0:X9=2; 1:X0=335544325; 2:X3=335544321;
+796835  :> 0:X2=0; 0:X9=2; 1:X0=335544325; 2:X3=335544323;
+2485958 :> 0:X2=0; 0:X9=2; 1:X0=335544325; 2:X3=335544325;
+4049125 :> 0:X2=0; 0:X9=3; 1:X0=335544323; 2:X3=335544321;
+22978566:> 0:X2=0; 0:X9=3; 1:X0=335544323; 2:X3=335544323;
+824724  :> 0:X2=0; 0:X9=3; 1:X0=335544323; 2:X3=335544325;
+2660130 :> 0:X2=0; 0:X9=3; 1:X0=335544325; 2:X3=335544321;
+6610920 :> 0:X2=0; 0:X9=3; 1:X0=335544325; 2:X3=335544323;
+11922182:> 0:X2=0; 0:X9=3; 1:X0=335544325; 2:X3=335544325;
+41825895:> 0:X2=1; 0:X9=2; 1:X0=335544323; 2:X3=335544321;
+143865140:> 0:X2=1; 0:X9=2; 1:X0=335544323; 2:X3=335544323;
+500     :> 0:X2=1; 0:X9=2; 1:X0=335544323; 2:X3=335544325;
+2338856 :> 0:X2=1; 0:X9=2; 1:X0=335544325; 2:X3=335544323;
+56      :> 0:X2=1; 0:X9=2; 1:X0=335544325; 2:X3=335544325;
+27      :> 0:X2=1; 0:X9=3; 1:X0=335544323; 2:X3=335544321;
+7298240 :> 0:X2=1; 0:X9=3; 1:X0=335544323; 2:X3=335544323;
+4       :> 0:X2=1; 0:X9=3; 1:X0=335544323; 2:X3=335544325;
+9       :> 0:X2=1; 0:X9=3; 1:X0=335544325; 2:X3=335544321;
+2342231 :> 0:X2=1; 0:X9=3; 1:X0=335544325; 2:X3=335544323;
+71      :> 0:X2=1; 0:X9=3; 1:X0=335544325; 2:X3=335544325;
+No
+Witnesses
+Positive: 0 Negative: 280100000
+Condition exists (0:X2=1 /\ 1:X0=20971523 /\ 2:X3=335544325 /\ 0:X9=2) is not validated
+Hash=59204371b4a2132e362542426526c6a6
+Time SM+RW+RW 13211.07
+
+Test SM+cachesync Allow
+Histogram (2 states)
+1120283857:> 0:X9=0;
+116143  :> 0:X9=1;
+Ok
+Witnesses
+Positive: 1120283857 Negative: 116143
+Condition exists (0:X9=0) is validated
+Hash=a0bfa8e00d4b4a7bd8a76e84e0aeb000
+Time SM+cachesync 641.26
+
+Test SM+cachesync-isb Forbid
+Histogram (1 states)
+1120400000:> 0:X9=1;
+Ok
+Witnesses
+Positive: 1120400000 Negative: 0
+Condition ~exists (0:X9=0) is validated
+Hash=aa0fe68f23b98bc2f4ed5dc625eefe87
+Time SM+cachesync-isb 641.84
+
+Test SM+dc-dmb-ic-dmb-isb Allow
+Histogram (1 states)
+1120400000:> 0:X9=1;
+No
+Witnesses
+Positive: 0 Negative: 1120400000
+Condition exists (0:X9=0) is not validated
+Hash=485108a9a7604cae0d7500c6716e0e39
+Time SM+dc-dmb-ic-dmb-isb 409.41
+
+Test SM+dsb-isb Allow
+Histogram (2 states)
+1113637695:> 0:X9=0;
+6762305 :> 0:X9=1;
+Ok
+Witnesses
+Positive: 1113637695 Negative: 6762305
+Condition exists (0:X9=0) is validated
+Hash=0befc7181577eae0b32bb51c41b12dfb
+Time SM+dsb-isb 431.07
+
+Test SM+isb Allow
+Histogram (2 states)
+1114568356:> 0:X9=0;
+5831644 :> 0:X9=1;
+Ok
+Witnesses
+Positive: 1114568356 Negative: 5831644
+Condition exists (0:X9=0) is validated
+Hash=e8a5b85333da3fea3dccb6d0710e422f
+Time SM+isb 318.38
+
+Test SM.F+ic Allow
+Histogram (7 states)
+216289588:> 0:X4=0; 0:X9=0; 1:X9=0;
+306859715:> 0:X4=0; 0:X9=0; 1:X9=1;
+7419960 :> 0:X4=0; 0:X9=1; 1:X9=0;
+801075  :> 0:X4=0; 0:X9=1; 1:X9=1;
+28718660:> 0:X4=1; 0:X9=0; 1:X9=0;
+110318  :> 0:X4=1; 0:X9=1; 1:X9=0;
+684     :> 0:X4=1; 0:X9=1; 1:X9=1;
+No
+Witnesses
+Positive: 0 Negative: 560200000
+Condition exists (1:X9=1 /\ 0:X4=1 /\ 0:X9=0) is not validated
+Hash=05ea5fbdba5b42d2c0f4c55327030f35
+Time SM.F+ic 1549.75
+
+Test WRC.F.FF Allow
+Histogram (6 states)
+233796967:> 1:X9=0; 2:X8=0; 2:X9=0;
+3086512 :> 1:X9=0; 2:X8=1; 2:X9=0;
+18315403:> 1:X9=0; 2:X8=1; 2:X9=1;
+21683041:> 1:X9=1; 2:X8=0; 2:X9=0;
+1       :> 1:X9=1; 2:X8=1; 2:X9=0;
+3218076 :> 1:X9=1; 2:X8=1; 2:X9=1;
+Ok
+Witnesses
+Positive: 1 Negative: 280099999
+Condition exists (1:X9=1 /\ 2:X8=1 /\ 2:X9=0) is validated
+Hash=18dbe56b63bd57cfd44ede5f789dbc14
+Time WRC.F.FF 8747.27
+
+Test WRC.F.RF Allow
+Histogram (8 states)
+128569165:> 1:X9=0; 2:X1=0; 2:X9=0;
+48558633:> 1:X9=0; 2:X1=0; 2:X9=1;
+27419719:> 1:X9=0; 2:X1=1; 2:X9=0;
+65222939:> 1:X9=0; 2:X1=1; 2:X9=1;
+2707676 :> 1:X9=1; 2:X1=0; 2:X9=0;
+4421742 :> 1:X9=1; 2:X1=0; 2:X9=1;
+65      :> 1:X9=1; 2:X1=1; 2:X9=0;
+3200061 :> 1:X9=1; 2:X1=1; 2:X9=1;
+Ok
+Witnesses
+Positive: 65 Negative: 280099935
+Condition exists (1:X9=1 /\ 2:X1=1 /\ 2:X9=0) is validated
+Hash=ff33a912a2ea992e8207342013190de2
+Time WRC.F.RF 7575.19
+
+Test WRC.F.RF+po+ctrl-isb Allow
+Histogram (4 states)
+17937859:> 1:X9=0; 2:X9=0;
+256216425:> 1:X9=0; 2:X9=1;
+1       :> 1:X9=1; 2:X9=0;
+5945715 :> 1:X9=1; 2:X9=1;
+Ok
+Witnesses
+Positive: 1 Negative: 280099999
+Condition exists (1:X9=1 /\ 2:X9=0) is validated
+Hash=9520e2956fcadc8576946eced72caec4
+Time WRC.F.RF+po+ctrl-isb 8008.46
+
+Test WRC.F.RR+po+dmb Allow
+Histogram (7 states)
+4845573 :> 1:X9=0; 2:X1=0; 2:X3=335544321;
+3996137 :> 1:X9=0; 2:X1=0; 2:X3=335544323;
+2849947 :> 1:X9=0; 2:X1=1; 2:X3=335544321;
+38928801:> 1:X9=1; 2:X1=0; 2:X3=335544321;
+70793036:> 1:X9=1; 2:X1=0; 2:X3=335544323;
+111208241:> 1:X9=1; 2:X1=1; 2:X3=335544321;
+47478265:> 1:X9=1; 2:X1=1; 2:X3=335544323;
+No
+Witnesses
+Positive: 0 Negative: 280100000
+Condition exists (1:X9=0 /\ 2:X1=1 /\ 2:X3=335544323) is not validated
+Hash=e8518e6c59c659c9422d04775af8bafb
+Time WRC.F.RR+po+dmb 7400.50
+
