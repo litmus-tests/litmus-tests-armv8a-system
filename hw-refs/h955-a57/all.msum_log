@@ -218,6 +218,18 @@ Condition exists (1:X8=3 /\ 1:X9=2) is not validated
 Hash=04fb154a88482cbd2fd6d1418111ac7e
 Time MP.RFF+dc-dsb+ctrl-isb-isb 7666.90
 
+Test MP.RRF+dmb+addr-cachesync-isb Allow
+Histogram (3 states)
+51591128:> 1:X0=0; 1:X3=0; 1:X6=0;
+145074676:> 1:X0=0; 1:X3=0; 1:X6=1;
+373434196:> 1:X0=1; 1:X3=0; 1:X6=1;
+No
+Witnesses
+Positive: 0 Negative: 570100000
+Condition exists (1:X0=1 /\ 1:X3=0 /\ 1:X6=0) is not validated
+Hash=af6660758ce70ca06835c90239781ac0
+Time MP.RRF+dmb+addr-cachesync-isb 1789.11
+
 Test SM Allow
 Histogram (1 states)
 5960200000:> 0:X9=0;

@@ -315,6 +315,18 @@ Condition exists (1:X8=3 /\ 1:X9=2) is not validated
 Hash=04fb154a88482cbd2fd6d1418111ac7e
 Time MP.RFF+dc-dsb+ctrl-isb-isb 9306.88
 
+Test MP.RRF+dmb+addr-cachesync-isb Allow
+Histogram (3 states)
+16179042:> 1:X0=0; 1:X3=0; 1:X6=0;
+697483713:> 1:X0=0; 1:X3=0; 1:X6=1;
+646537245:> 1:X0=1; 1:X3=0; 1:X6=1;
+No
+Witnesses
+Positive: 0 Negative: 1360200000
+Condition exists (1:X0=1 /\ 1:X3=0 /\ 1:X6=0) is not validated
+Hash=af6660758ce70ca06835c90239781ac0
+Time MP.RRF+dmb+addr-cachesync-isb 1818.82
+
 Test SM Allow
 Histogram (2 states)
 6280366783:> 0:X9=0;
@@ -506,4 +518,20 @@ Positive: 0 Negative: 1570100000
 Condition exists (1:X9=0 /\ 2:X1=1 /\ 2:X3=335544323) is not validated
 Hash=e8518e6c59c659c9422d04775af8bafb
 Time WRC.F.RR+po+dmb 7175.43
+
+Test WRC.R.RF+addr+addr-cachesync-isb Allow
+Histogram (7 states)
+1402609 :> 1:X0=335544321; 2:X0=0; 2:X3=0; 2:X6=0;
+212953040:> 1:X0=335544321; 2:X0=0; 2:X3=0; 2:X6=1;
+313954772:> 1:X0=335544321; 2:X0=1; 2:X3=0; 2:X6=1;
+11872694:> 1:X0=335544323; 2:X0=0; 2:X3=0; 2:X6=0;
+159673496:> 1:X0=335544323; 2:X0=0; 2:X3=0; 2:X6=1;
+1216316 :> 1:X0=335544323; 2:X0=1; 2:X3=0; 2:X6=0;
+219027073:> 1:X0=335544323; 2:X0=1; 2:X3=0; 2:X6=1;
+No
+Witnesses
+Positive: 0 Negative: 920100000
+Condition exists (1:X0=335544321 /\ 2:X0=1 /\ 2:X3=0 /\ 2:X6=0) is not validated
+Hash=5deacb5ad30eacde7b56ad914b0aa2fd
+Time WRC.R.RF+addr+addr-cachesync-isb 1423.09
 
