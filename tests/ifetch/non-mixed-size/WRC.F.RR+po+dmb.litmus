@@ -9,7 +9,7 @@ int64_t x;
  P0          | P1           | P2           ;
 STR W0, [X1] | BL L2        | LDR X1, [X2] ;
              | B Lafter     | DMB ISH      ;
-             | L2:          | LDR X3, [X4] ;
+             | L2:          | LDR W3, [X4] ;
              | B Lfail_L2   |              ;
              | MOV X9, #0   |              ;
              | RET          |              ;
