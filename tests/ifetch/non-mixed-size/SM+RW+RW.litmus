@@ -10,7 +10,7 @@ int64_t x;
 }
 
  P0             | P1          | P2             ;
-   STR W0, [X1] | LDR W0,[X1] | LDR X3,[X1]    ;
+   STR W0, [X1] | LDR W0,[X1] | LDR W3,[X1]    ;
    LDR X2, [X3] | STR W2,[X1] | EOR X4,X3,X3   ;
    DMB SY       |             | MOV X5,#1      ;
    DC CVAU, X1  |             | STR X5,[X6,X4] ;
