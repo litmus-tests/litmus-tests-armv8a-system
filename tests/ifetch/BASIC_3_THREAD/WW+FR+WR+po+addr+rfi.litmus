@@ -1,0 +1,25 @@
+AArch64 WW+FR+WR+po+addr+rfi
+"PodWW Iffe DpAddrdR Fre Rfi Fre"
+Cycle=Rfi Fre PodWW Iffe DpAddrdR Fre
+Relax=Iffe
+Safe=Rfi Fre PodWW DpAddrd*
+Generator=diy7 (version 7.52+10(dev))
+Com=Iff Fr Fr
+Orig=PodWW Iffe DpAddrdR Fre Rfi Fre
+{
+0:X0=0x2; 0:X1=x; 0:X2=0x14000001; 0:X3=P1:Lself02;
+1:X3=x;
+2:X0=0x1; 2:X1=x;
+}
+ P0          | P1                  | P2          ;
+ STR W0,[X1] | Lself02:            | STR W0,[X1] ;
+ STR W2,[X3] | B L00               | LDR W2,[X1] ;
+             | MOV W0,#2           |             ;
+             | B L01               |             ;
+             | L00:                |             ;
+             | MOV W0,#1           |             ;
+             | L01:                |             ;
+             | EOR W1,W0,W0        |             ;
+             | LDR W2,[X3,W1,SXTW] |             ;
+exists
+(x=0x2 /\ 1:X0=0x2 /\ 1:X2=0x0 /\ 2:X2=0x1)

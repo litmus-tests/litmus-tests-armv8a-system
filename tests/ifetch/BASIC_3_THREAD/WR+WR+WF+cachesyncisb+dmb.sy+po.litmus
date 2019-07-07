@@ -1,0 +1,24 @@
+AArch64 WR+WR+WF+cachesyncisb+dmb.sy+po
+"CacheSyncIsbdWR Fre DMB.SYdWR Fre PodWR Fife"
+Cycle=Fre PodWR Fife CacheSyncIsbdWR Fre DMB.SYdWR
+Relax=Fife
+Safe=Fre PodWR DMB.SYdWR CacheSyncIsbdWR
+Generator=diy7 (version 7.52+10(dev))
+Com=Fr Fr Fif
+Orig=CacheSyncIsbdWR Fre DMB.SYdWR Fre PodWR Fife
+{
+0:X0=0x14000001; 0:X1=P2:Lself02; 0:X3=x;
+1:X0=0x1; 1:X1=x; 1:X3=y;
+2:X0=0x1; 2:X1=y;
+}
+ P0          | P1          | P2          ;
+ STR W0,[X1] | STR W0,[X1] | STR W0,[X1] ;
+ DC CVAU,X1  | DMB SY      | Lself02:    ;
+ DSB ISH     | LDR W2,[X3] | B L00       ;
+ IC IVAU,X1  |             | MOV W2,#2   ;
+ DSB ISH     |             | B L01       ;
+ ISB         |             | L00:        ;
+ LDR W2,[X3] |             | MOV W2,#1   ;
+             |             | L01:        ;
+exists
+(0:X2=0x0 /\ 1:X2=0x0 /\ 2:X2=0x1)

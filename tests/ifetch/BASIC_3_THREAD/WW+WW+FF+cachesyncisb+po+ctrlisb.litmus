@@ -1,0 +1,32 @@
+AArch64 WW+WW+FF+cachesyncisb+po+ctrlisb
+"CacheSyncIsbdWW Wse PodWW Iffe DpCtrlIsbdR Fife"
+Cycle=Wse PodWW Iffe DpCtrlIsbdR Fife CacheSyncIsbdWW
+Relax=Iffe Fife
+Safe=Wse PodWW CacheSyncIsbdWW DpCtrlIsbdR
+Generator=diy7 (version 7.52+10(dev))
+Com=Ws Iff Fif
+Orig=CacheSyncIsbdWW Wse PodWW Iffe DpCtrlIsbdR Fife
+{
+0:X0=0x14000001; 0:X1=P2:Lself02; 0:X2=0x1; 0:X3=x;
+1:X0=0x2; 1:X1=x; 1:X2=0x14000001; 1:X3=P2:Lself03;
+}
+ P0          | P1          | P2           ;
+ STR W0,[X1] | STR W0,[X1] | Lself03:     ;
+ DC CVAU,X1  | STR W2,[X3] | B L00        ;
+ DSB ISH     |             | MOV W0,#2    ;
+ IC IVAU,X1  |             | B L01        ;
+ DSB ISH     |             | L00:         ;
+ ISB         |             | MOV W0,#1    ;
+ STR W2,[X3] |             | L01:         ;
+             |             | CBNZ W0,LC02 ;
+             |             | LC02:        ;
+             |             | ISB          ;
+             |             | Lself02:     ;
+             |             | B L03        ;
+             |             | MOV W1,#2    ;
+             |             | B L04        ;
+             |             | L03:         ;
+             |             | MOV W1,#1    ;
+             |             | L04:         ;
+exists
+(x=0x2 /\ 2:X0=0x2 /\ 2:X1=0x1)

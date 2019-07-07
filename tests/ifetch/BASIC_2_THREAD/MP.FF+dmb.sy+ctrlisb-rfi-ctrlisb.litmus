@@ -1,0 +1,37 @@
+AArch64 MP.FF+dmb.sy+ctrlisb-rfi-ctrlisb
+"DMB.SYdWW Iffe DpCtrlIsbdW Rfi DpCtrlIsbdR Fife"
+Cycle=Rfi DpCtrlIsbdR Fife DMB.SYdWW Iffe DpCtrlIsbdW
+Relax=Iffe Fife
+Safe=Rfi DMB.SYdWW DpCtrlIsbdW DpCtrlIsbdR
+Generator=diy7 (version 7.52+10(dev))
+Com=Iff Fif
+Orig=DMB.SYdWW Iffe DpCtrlIsbdW Rfi DpCtrlIsbdR Fife
+{
+0:X0=0x14000001; 0:X1=P1:Lself05; 0:X2=P1:Lself06;
+1:X1=0x1; 1:X2=x;
+}
+ P0          | P1           ;
+ STR W0,[X1] | Lself06:     ;
+ DMB SY      | B L00        ;
+ STR W0,[X2] | MOV W0,#2    ;
+             | B L01        ;
+             | L00:         ;
+             | MOV W0,#1    ;
+             | L01:         ;
+             | CBNZ W0,LC02 ;
+             | LC02:        ;
+             | ISB          ;
+             | STR W1,[X2]  ;
+             | LDR W3,[X2]  ;
+             | CBNZ W3,LC03 ;
+             | LC03:        ;
+             | ISB          ;
+             | Lself05:     ;
+             | B L04        ;
+             | MOV W4,#2    ;
+             | B L05        ;
+             | L04:         ;
+             | MOV W4,#1    ;
+             | L05:         ;
+exists
+(1:X0=0x2 /\ 1:X3=0x1 /\ 1:X4=0x1)

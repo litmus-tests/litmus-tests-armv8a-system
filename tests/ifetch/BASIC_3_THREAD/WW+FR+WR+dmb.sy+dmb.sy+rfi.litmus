@@ -1,0 +1,25 @@
+AArch64 WW+FR+WR+dmb.sy+dmb.sy+rfi
+"DMB.SYdWW Iffe DMB.SYdRR Fre Rfi Fre"
+Cycle=Rfi Fre DMB.SYdWW Iffe DMB.SYdRR Fre
+Relax=Iffe
+Safe=Rfi Fre DMB.SYdWW DMB.SYdRR
+Generator=diy7 (version 7.52+10(dev))
+Com=Iff Fr Fr
+Orig=DMB.SYdWW Iffe DMB.SYdRR Fre Rfi Fre
+{
+0:X0=0x2; 0:X1=x; 0:X2=0x14000001; 0:X3=P1:Lself02;
+1:X2=x;
+2:X0=0x1; 2:X1=x;
+}
+ P0          | P1          | P2          ;
+ STR W0,[X1] | Lself02:    | STR W0,[X1] ;
+ DMB SY      | B L00       | LDR W2,[X1] ;
+ STR W2,[X3] | MOV W0,#2   |             ;
+             | B L01       |             ;
+             | L00:        |             ;
+             | MOV W0,#1   |             ;
+             | L01:        |             ;
+             | DMB SY      |             ;
+             | LDR W1,[X2] |             ;
+exists
+(x=0x2 /\ 1:X0=0x2 /\ 1:X1=0x0 /\ 2:X2=0x1)

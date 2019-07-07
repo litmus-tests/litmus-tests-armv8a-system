@@ -1,0 +1,27 @@
+AArch64 WW+FW+WR+po+ctrlisb+dmb.sy
+"PodWW Iffe DpCtrlIsbdW Wse DMB.SYdWR Fre"
+Cycle=Fre PodWW Iffe DpCtrlIsbdW Wse DMB.SYdWR
+Relax=Iffe
+Safe=Fre Wse PodWW DMB.SYdWR DpCtrlIsbdW
+Generator=diy7 (version 7.52+10(dev))
+Com=Iff Ws Fr
+Orig=PodWW Iffe DpCtrlIsbdW Wse DMB.SYdWR Fre
+{
+0:X0=0x1; 0:X1=x; 0:X2=0x14000001; 0:X3=P1:Lself02;
+1:X1=0x1; 1:X2=y;
+2:X0=0x2; 2:X1=y; 2:X3=x;
+}
+ P0          | P1           | P2          ;
+ STR W0,[X1] | Lself02:     | STR W0,[X1] ;
+ STR W2,[X3] | B L00        | DMB SY      ;
+             | MOV W0,#2    | LDR W2,[X3] ;
+             | B L01        |             ;
+             | L00:         |             ;
+             | MOV W0,#1    |             ;
+             | L01:         |             ;
+             | CBNZ W0,LC02 |             ;
+             | LC02:        |             ;
+             | ISB          |             ;
+             | STR W1,[X2]  |             ;
+exists
+(y=0x2 /\ 1:X0=0x2 /\ 2:X2=0x0)

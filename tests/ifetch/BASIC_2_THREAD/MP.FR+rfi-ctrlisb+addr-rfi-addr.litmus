@@ -1,0 +1,27 @@
+AArch64 MP.FR+rfi-ctrlisb+addr-rfi-addr
+"Rfi DpCtrlIsbdW Iffe DpAddrdW Rfi DpAddrdR Fre"
+Cycle=Rfi DpAddrdR Fre Rfi DpCtrlIsbdW Iffe DpAddrdW
+Relax=Iffe
+Safe=Rfi Fre DpAddrd* DpCtrlIsbdW
+Generator=diy7 (version 7.52+10(dev))
+Com=Iff Fr
+Orig=Rfi DpCtrlIsbdW Iffe DpAddrdW Rfi DpAddrdR Fre
+{
+0:X0=0x1; 0:X1=x; 0:X3=0x14000001; 0:X4=P1:Lself05;
+1:X2=0x1; 1:X3=y; 1:X7=x;
+}
+ P0           | P1                  ;
+ STR W0,[X1]  | Lself05:            ;
+ LDR W2,[X1]  | B L01               ;
+ CBNZ W2,LC00 | MOV W0,#2           ;
+ LC00:        | B L02               ;
+ ISB          | L01:                ;
+ STR W3,[X4]  | MOV W0,#1           ;
+              | L02:                ;
+              | EOR W1,W0,W0        ;
+              | STR W2,[X3,W1,SXTW] ;
+              | LDR W4,[X3]         ;
+              | EOR W5,W4,W4        ;
+              | LDR W6,[X7,W5,SXTW] ;
+exists
+(0:X2=0x1 /\ 1:X0=0x2 /\ 1:X4=0x1 /\ 1:X6=0x0)

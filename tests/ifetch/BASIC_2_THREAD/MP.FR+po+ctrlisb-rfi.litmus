@@ -1,0 +1,27 @@
+AArch64 MP.FR+po+ctrlisb-rfi
+"PodWW Iffe DpCtrlIsbdW Rfi Fre"
+Cycle=Rfi Fre PodWW Iffe DpCtrlIsbdW
+Relax=Iffe
+Safe=Rfi Fre PodWW DpCtrlIsbdW
+Generator=diy7 (version 7.52+10(dev))
+Com=Iff Fr
+Orig=PodWW Iffe DpCtrlIsbdW Rfi Fre
+{
+0:X0=0x2; 0:X1=x; 0:X2=0x14000001; 0:X3=P1:Lself04;
+1:X1=0x1; 1:X2=x;
+}
+ P0          | P1           ;
+ STR W0,[X1] | Lself04:     ;
+ STR W2,[X3] | B L00        ;
+             | MOV W0,#2    ;
+             | B L01        ;
+             | L00:         ;
+             | MOV W0,#1    ;
+             | L01:         ;
+             | CBNZ W0,LC02 ;
+             | LC02:        ;
+             | ISB          ;
+             | STR W1,[X2]  ;
+             | LDR W3,[X2]  ;
+exists
+(x=0x2 /\ 1:X0=0x2 /\ 1:X3=0x1)

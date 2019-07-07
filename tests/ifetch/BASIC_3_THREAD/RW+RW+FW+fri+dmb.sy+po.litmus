@@ -1,0 +1,24 @@
+AArch64 RW+RW+FW+fri+dmb.sy+po
+"Fri Rfe DMB.SYdRW Iffe PodRW Rfe"
+Cycle=Rfe Fri Rfe DMB.SYdRW Iffe PodRW
+Relax=Iffe
+Safe=Rfe Fri PodRW DMB.SYdRW
+Generator=diy7 (version 7.52+10(dev))
+Com=Rf Iff Rf
+Orig=Fri Rfe DMB.SYdRW Iffe PodRW Rfe
+{
+0:X1=x; 0:X2=0x2;
+1:X1=x; 1:X2=0x14000001; 1:X3=P2:Lself52;
+2:X1=0x1; 2:X2=x;
+}
+ P0          | P1          | P2          ;
+ LDR W0,[X1] | LDR W0,[X1] | Lself52:    ;
+ STR W2,[X1] | DMB SY      | B L00       ;
+             | STR W2,[X3] | MOV W0,#2   ;
+             |             | B L01       ;
+             |             | L00:        ;
+             |             | MOV W0,#1   ;
+             |             | L01:        ;
+             |             | STR W1,[X2] ;
+exists
+(x=0x2 /\ 0:X0=0x1 /\ 1:X0=0x2 /\ 2:X0=0x2)

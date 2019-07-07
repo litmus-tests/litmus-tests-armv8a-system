@@ -1,0 +1,25 @@
+AArch64 WW+RW+FW+po+dmb.sy+addr
+"PodWW Rfe DMB.SYdRW Iffe DpAddrdW Wse"
+Cycle=Rfe DMB.SYdRW Iffe DpAddrdW Wse PodWW
+Relax=Iffe
+Safe=Rfe Wse PodWW DMB.SYdRW DpAddrd*
+Generator=diy7 (version 7.52+10(dev))
+Com=Rf Iff Ws
+Orig=PodWW Rfe DMB.SYdRW Iffe DpAddrdW Wse
+{
+0:X0=0x2; 0:X1=x; 0:X2=0x1; 0:X3=y;
+1:X1=y; 1:X2=0x14000001; 1:X3=P2:Lself02;
+2:X2=0x1; 2:X3=x;
+}
+ P0          | P1          | P2                  ;
+ STR W0,[X1] | LDR W0,[X1] | Lself02:            ;
+ STR W2,[X3] | DMB SY      | B L00               ;
+             | STR W2,[X3] | MOV W0,#2           ;
+             |             | B L01               ;
+             |             | L00:                ;
+             |             | MOV W0,#1           ;
+             |             | L01:                ;
+             |             | EOR W1,W0,W0        ;
+             |             | STR W2,[X3,W1,SXTW] ;
+exists
+(x=0x2 /\ 1:X0=0x1 /\ 2:X0=0x2)

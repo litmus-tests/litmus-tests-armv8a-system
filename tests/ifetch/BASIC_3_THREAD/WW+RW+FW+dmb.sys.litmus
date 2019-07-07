@@ -1,0 +1,25 @@
+AArch64 WW+RW+FW+dmb.sys
+"DMB.SYdWW Rfe DMB.SYdRW Iffe DMB.SYdRW Wse"
+Cycle=Rfe DMB.SYdRW Iffe DMB.SYdRW Wse DMB.SYdWW
+Relax=Iffe
+Safe=Rfe Wse DMB.SYdWW DMB.SYdRW
+Generator=diy7 (version 7.52+10(dev))
+Com=Rf Iff Ws
+Orig=DMB.SYdWW Rfe DMB.SYdRW Iffe DMB.SYdRW Wse
+{
+0:X0=0x2; 0:X1=x; 0:X2=0x1; 0:X3=y;
+1:X1=y; 1:X2=0x14000001; 1:X3=P2:Lself02;
+2:X1=0x1; 2:X2=x;
+}
+ P0          | P1          | P2          ;
+ STR W0,[X1] | LDR W0,[X1] | Lself02:    ;
+ DMB SY      | DMB SY      | B L00       ;
+ STR W2,[X3] | STR W2,[X3] | MOV W0,#2   ;
+             |             | B L01       ;
+             |             | L00:        ;
+             |             | MOV W0,#1   ;
+             |             | L01:        ;
+             |             | DMB SY      ;
+             |             | STR W1,[X2] ;
+exists
+(x=0x2 /\ 1:X0=0x1 /\ 2:X0=0x2)

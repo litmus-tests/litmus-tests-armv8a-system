@@ -1,0 +1,29 @@
+AArch64 ISA2.F.FF+po+ctrlisb+po
+"PodWW Iffe DpCtrlIsbdW Iffe PodRR Fife"
+Cycle=PodWW Iffe DpCtrlIsbdW Iffe PodRR Fife
+Relax=Iffe Fife
+Safe=PodWW PodRR DpCtrlIsbdW
+Generator=diy7 (version 7.52+10(dev))
+Com=Iff Iff Fif
+Orig=PodWW Iffe DpCtrlIsbdW Iffe PodRR Fife
+{
+0:X0=0x14000001; 0:X1=P2:Lself02; 0:X2=P1:Lself03;
+1:X1=0x14000001; 1:X2=P2:Lself04;
+}
+ P0          | P1           | P2        ;
+ STR W0,[X1] | Lself03:     | Lself04:  ;
+ STR W0,[X2] | B L00        | B L03     ;
+             | MOV W0,#2    | MOV W0,#2 ;
+             | B L01        | B L04     ;
+             | L00:         | L03:      ;
+             | MOV W0,#1    | MOV W0,#1 ;
+             | L01:         | L04:      ;
+             | CBNZ W0,LC02 | Lself02:  ;
+             | LC02:        | B L05     ;
+             | ISB          | MOV W1,#2 ;
+             | STR W1,[X2]  | B L06     ;
+             |              | L05:      ;
+             |              | MOV W1,#1 ;
+             |              | L06:      ;
+exists
+(1:X0=0x2 /\ 2:X0=0x2 /\ 2:X1=0x1)

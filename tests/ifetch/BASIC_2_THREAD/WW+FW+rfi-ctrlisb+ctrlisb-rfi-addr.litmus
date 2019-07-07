@@ -1,0 +1,29 @@
+AArch64 WW+FW+rfi-ctrlisb+ctrlisb-rfi-addr
+"Rfi DpCtrlIsbdW Iffe DpCtrlIsbdW Rfi DpAddrdW Wse"
+Cycle=Rfi DpAddrdW Wse Rfi DpCtrlIsbdW Iffe DpCtrlIsbdW
+Relax=Iffe
+Safe=Rfi Wse DpAddrd* DpCtrlIsbdW
+Generator=diy7 (version 7.52+10(dev))
+Com=Iff Ws
+Orig=Rfi DpCtrlIsbdW Iffe DpCtrlIsbdW Rfi DpAddrdW Wse
+{
+0:X0=0x2; 0:X1=x; 0:X3=0x14000001; 0:X4=P1:Lself03;
+1:X1=0x1; 1:X2=y; 1:X5=x;
+}
+ P0           | P1                  ;
+ STR W0,[X1]  | Lself03:            ;
+ LDR W2,[X1]  | B L01               ;
+ CBNZ W2,LC00 | MOV W0,#2           ;
+ LC00:        | B L02               ;
+ ISB          | L01:                ;
+ STR W3,[X4]  | MOV W0,#1           ;
+              | L02:                ;
+              | CBNZ W0,LC03        ;
+              | LC03:               ;
+              | ISB                 ;
+              | STR W1,[X2]         ;
+              | LDR W3,[X2]         ;
+              | EOR W4,W3,W3        ;
+              | STR W1,[X5,W4,SXTW] ;
+exists
+(x=0x2 /\ 0:X2=0x2 /\ 1:X0=0x2 /\ 1:X3=0x1)

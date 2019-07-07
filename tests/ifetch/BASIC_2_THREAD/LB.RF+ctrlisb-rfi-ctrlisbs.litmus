@@ -1,0 +1,31 @@
+AArch64 LB.RF+ctrlisb-rfi-ctrlisbs
+"DpCtrlIsbdW Rfi DpCtrlIsbdW Iffe DpCtrlIsbdW Rfi DpCtrlIsbdW Rfe"
+Cycle=Rfi DpCtrlIsbdW Rfe DpCtrlIsbdW Rfi DpCtrlIsbdW Iffe DpCtrlIsbdW
+Relax=Iffe
+Safe=Rfi Rfe DpCtrlIsbdW
+Generator=diy7 (version 7.52+10(dev))
+Com=Iff Rf
+Orig=DpCtrlIsbdW Rfi DpCtrlIsbdW Iffe DpCtrlIsbdW Rfi DpCtrlIsbdW Rfe
+{
+0:X1=x; 0:X2=0x1; 0:X3=y; 0:X5=0x14000001; 0:X6=P1:Lself05;
+1:X1=0x1; 1:X2=z; 1:X4=x;
+}
+ P0           | P1           ;
+ LDR W0,[X1]  | Lself05:     ;
+ CBNZ W0,LC00 | B L02        ;
+ LC00:        | MOV W0,#2    ;
+ ISB          | B L03        ;
+ STR W2,[X3]  | L02:         ;
+ LDR W4,[X3]  | MOV W0,#1    ;
+ CBNZ W4,LC01 | L03:         ;
+ LC01:        | CBNZ W0,LC04 ;
+ ISB          | LC04:        ;
+ STR W5,[X6]  | ISB          ;
+              | STR W1,[X2]  ;
+              | LDR W3,[X2]  ;
+              | CBNZ W3,LC05 ;
+              | LC05:        ;
+              | ISB          ;
+              | STR W1,[X4]  ;
+exists
+(0:X0=0x1 /\ 0:X4=0x1 /\ 1:X0=0x2 /\ 1:X3=0x1)

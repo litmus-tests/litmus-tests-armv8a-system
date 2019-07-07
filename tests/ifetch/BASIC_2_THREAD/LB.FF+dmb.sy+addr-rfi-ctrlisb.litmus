@@ -1,0 +1,29 @@
+AArch64 LB.FF+dmb.sy+addr-rfi-ctrlisb
+"DMB.SYdRW Iffe DpAddrdW Rfi DpCtrlIsbdW Iffe"
+Cycle=Rfi DpCtrlIsbdW Iffe DMB.SYdRW Iffe DpAddrdW
+Relax=Iffe
+Safe=Rfi DMB.SYdRW DpAddrd* DpCtrlIsbdW
+Generator=diy7 (version 7.52+10(dev))
+Com=Iff Iff
+Orig=DMB.SYdRW Iffe DpAddrdW Rfi DpCtrlIsbdW Iffe
+{
+0:X1=0x14000001; 0:X2=P1:Lself10;
+1:X2=0x1; 1:X3=x; 1:X5=0x14000001; 1:X6=P0:Lself09;
+}
+ P0          | P1                  ;
+ Lself09:    | Lself10:            ;
+ B L00       | B L02               ;
+ MOV W0,#2   | MOV W0,#2           ;
+ B L01       | B L03               ;
+ L00:        | L02:                ;
+ MOV W0,#1   | MOV W0,#1           ;
+ L01:        | L03:                ;
+ DMB SY      | EOR W1,W0,W0        ;
+ STR W1,[X2] | STR W2,[X3,W1,SXTW] ;
+             | LDR W4,[X3]         ;
+             | CBNZ W4,LC04        ;
+             | LC04:               ;
+             | ISB                 ;
+             | STR W5,[X6]         ;
+exists
+(0:X0=0x2 /\ 1:X0=0x2 /\ 1:X4=0x1)

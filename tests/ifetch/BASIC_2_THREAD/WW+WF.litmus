@@ -1,0 +1,23 @@
+AArch64 WW+WF
+"PodWW Wse PodWR Fife"
+Cycle=Wse PodWR Fife PodWW
+Relax=Fife
+Safe=Wse PodWW PodWR
+Generator=diy7 (version 7.52+10(dev))
+Com=Ws Fif
+Orig=PodWW Wse PodWR Fife
+{
+0:X0=0x14000001; 0:X1=P1:Lself19; 0:X2=0x1; 0:X3=x;
+1:X0=0x2; 1:X1=x;
+}
+ P0          | P1          ;
+ STR W0,[X1] | STR W0,[X1] ;
+ STR W2,[X3] | Lself19:    ;
+             | B L00       ;
+             | MOV W2,#2   ;
+             | B L01       ;
+             | L00:        ;
+             | MOV W2,#1   ;
+             | L01:        ;
+exists
+(x=0x2 /\ 1:X2=0x1)

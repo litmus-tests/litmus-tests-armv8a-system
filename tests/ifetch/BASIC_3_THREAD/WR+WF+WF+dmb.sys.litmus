@@ -1,0 +1,25 @@
+AArch64 WR+WF+WF+dmb.sys
+"DMB.SYdWR Fre DMB.SYdWR Fife DMB.SYdWR Fife"
+Cycle=Fre DMB.SYdWR Fife DMB.SYdWR Fife DMB.SYdWR
+Relax=Fife
+Safe=Fre DMB.SYdWR
+Generator=diy7 (version 7.52+10(dev))
+Com=Fr Fif Fif
+Orig=DMB.SYdWR Fre DMB.SYdWR Fife DMB.SYdWR Fife
+{
+0:X0=0x14000001; 0:X1=P2:Lself04; 0:X3=x;
+1:X0=0x1; 1:X1=x;
+2:X0=0x14000001; 2:X1=P1:Lself05;
+}
+ P0          | P1          | P2          ;
+ STR W0,[X1] | STR W0,[X1] | STR W0,[X1] ;
+ DMB SY      | DMB SY      | DMB SY      ;
+ LDR W2,[X3] | Lself05:    | Lself04:    ;
+             | B L00       | B L02       ;
+             | MOV W2,#2   | MOV W2,#2   ;
+             | B L01       | B L03       ;
+             | L00:        | L02:        ;
+             | MOV W2,#1   | MOV W2,#1   ;
+             | L01:        | L03:        ;
+exists
+(0:X2=0x0 /\ 1:X2=0x1 /\ 2:X2=0x1)

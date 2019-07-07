@@ -1,0 +1,27 @@
+AArch64 WW+FW+FW+po+ctrlisb+ctrlisb
+"PodWW Iffe DpCtrlIsbdW Iffe DpCtrlIsbdW Wse"
+Cycle=Wse PodWW Iffe DpCtrlIsbdW Iffe DpCtrlIsbdW
+Relax=Iffe
+Safe=Wse PodWW DpCtrlIsbdW
+Generator=diy7 (version 7.52+10(dev))
+Com=Iff Iff Ws
+Orig=PodWW Iffe DpCtrlIsbdW Iffe DpCtrlIsbdW Wse
+{
+0:X0=0x2; 0:X1=x; 0:X2=0x14000001; 0:X3=P1:Lself02;
+1:X1=0x14000001; 1:X2=P2:Lself03;
+2:X1=0x1; 2:X2=x;
+}
+ P0          | P1           | P2           ;
+ STR W0,[X1] | Lself02:     | Lself03:     ;
+ STR W2,[X3] | B L00        | B L03        ;
+             | MOV W0,#2    | MOV W0,#2    ;
+             | B L01        | B L04        ;
+             | L00:         | L03:         ;
+             | MOV W0,#1    | MOV W0,#1    ;
+             | L01:         | L04:         ;
+             | CBNZ W0,LC02 | CBNZ W0,LC05 ;
+             | LC02:        | LC05:        ;
+             | ISB          | ISB          ;
+             | STR W1,[X2]  | STR W1,[X2]  ;
+exists
+(x=0x2 /\ 1:X0=0x2 /\ 2:X0=0x2)

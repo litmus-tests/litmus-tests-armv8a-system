@@ -1,0 +1,27 @@
+AArch64 SB.RF+po+rfi-ctrlisb
+"PodWR Fre Rfi DpCtrlIsbdR Fife"
+Cycle=Rfi DpCtrlIsbdR Fife PodWR Fre
+Relax=Fife
+Safe=Rfi Fre PodWR DpCtrlIsbdR
+Generator=diy7 (version 7.52+10(dev))
+Com=Fr Fif
+Orig=PodWR Fre Rfi DpCtrlIsbdR Fife
+{
+0:X0=0x14000001; 0:X1=P1:Lself137; 0:X3=x;
+1:X0=0x1; 1:X1=x;
+}
+ P0          | P1           ;
+ STR W0,[X1] | STR W0,[X1]  ;
+ LDR W2,[X3] | LDR W2,[X1]  ;
+             | CBNZ W2,LC00 ;
+             | LC00:        ;
+             | ISB          ;
+             | Lself137:    ;
+             | B L01        ;
+             | MOV W3,#2    ;
+             | B L02        ;
+             | L01:         ;
+             | MOV W3,#1    ;
+             | L02:         ;
+exists
+(0:X2=0x0 /\ 1:X2=0x1 /\ 1:X3=0x1)

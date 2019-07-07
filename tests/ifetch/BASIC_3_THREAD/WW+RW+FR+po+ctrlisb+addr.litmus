@@ -1,0 +1,25 @@
+AArch64 WW+RW+FR+po+ctrlisb+addr
+"PodWW Rfe DpCtrlIsbdW Iffe DpAddrdR Fre"
+Cycle=Rfe DpCtrlIsbdW Iffe DpAddrdR Fre PodWW
+Relax=Iffe
+Safe=Rfe Fre PodWW DpAddrd* DpCtrlIsbdW
+Generator=diy7 (version 7.52+10(dev))
+Com=Rf Iff Fr
+Orig=PodWW Rfe DpCtrlIsbdW Iffe DpAddrdR Fre
+{
+0:X0=0x1; 0:X1=x; 0:X2=y;
+1:X1=y; 1:X2=0x14000001; 1:X3=P2:Lself03;
+2:X3=x;
+}
+ P0          | P1           | P2                  ;
+ STR W0,[X1] | LDR W0,[X1]  | Lself03:            ;
+ STR W0,[X2] | CBNZ W0,LC00 | B L01               ;
+             | LC00:        | MOV W0,#2           ;
+             | ISB          | B L02               ;
+             | STR W2,[X3]  | L01:                ;
+             |              | MOV W0,#1           ;
+             |              | L02:                ;
+             |              | EOR W1,W0,W0        ;
+             |              | LDR W2,[X3,W1,SXTW] ;
+exists
+(1:X0=0x1 /\ 2:X0=0x2 /\ 2:X2=0x0)

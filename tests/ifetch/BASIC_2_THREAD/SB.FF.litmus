@@ -1,0 +1,23 @@
+AArch64 SB.FF
+"PodWR Fife PodWR Fife"
+Cycle=PodWR Fife PodWR Fife
+Relax=Fife
+Safe=PodWR
+Generator=diy7 (version 7.52+10(dev))
+Com=Fif Fif
+Orig=PodWR Fife PodWR Fife
+{
+0:X0=0x14000001; 0:X1=P1:Lself1449;
+1:X0=0x14000001; 1:X1=P0:Lself1450;
+}
+ P0          | P1          ;
+ STR W0,[X1] | STR W0,[X1] ;
+ Lself1450:  | Lself1449:  ;
+ B L00       | B L02       ;
+ MOV W2,#2   | MOV W2,#2   ;
+ B L01       | B L03       ;
+ L00:        | L02:        ;
+ MOV W2,#1   | MOV W2,#1   ;
+ L01:        | L03:        ;
+exists
+(0:X2=0x1 /\ 1:X2=0x1)

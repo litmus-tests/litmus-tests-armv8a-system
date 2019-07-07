@@ -1,0 +1,24 @@
+AArch64 MP.FR+po+addr
+"PodWW Iffe DpAddrdR Fre"
+Cycle=Fre PodWW Iffe DpAddrdR
+Relax=Iffe
+Safe=Fre PodWW DpAddrd*
+Generator=diy7 (version 7.52+10(dev))
+Com=Iff Fr
+Orig=PodWW Iffe DpAddrdR Fre
+{
+0:X0=0x1; 0:X1=x; 0:X2=0x14000001; 0:X3=P1:Lself06;
+1:X3=x;
+}
+ P0          | P1                  ;
+ STR W0,[X1] | Lself06:            ;
+ STR W2,[X3] | B L00               ;
+             | MOV W0,#2           ;
+             | B L01               ;
+             | L00:                ;
+             | MOV W0,#1           ;
+             | L01:                ;
+             | EOR W1,W0,W0        ;
+             | LDR W2,[X3,W1,SXTW] ;
+exists
+(1:X0=0x2 /\ 1:X2=0x0)

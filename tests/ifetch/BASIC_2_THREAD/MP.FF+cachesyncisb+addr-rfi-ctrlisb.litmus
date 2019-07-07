@@ -1,0 +1,35 @@
+AArch64 MP.FF+cachesyncisb+addr-rfi-ctrlisb
+"CacheSyncIsbdWW Iffe DpAddrdW Rfi DpCtrlIsbdR Fife"
+Cycle=Rfi DpCtrlIsbdR Fife CacheSyncIsbdWW Iffe DpAddrdW
+Relax=Iffe Fife
+Safe=Rfi CacheSyncIsbdWW DpAddrd* DpCtrlIsbdR
+Generator=diy7 (version 7.52+10(dev))
+Com=Iff Fif
+Orig=CacheSyncIsbdWW Iffe DpAddrdW Rfi DpCtrlIsbdR Fife
+{
+0:X0=0x14000001; 0:X1=P1:Lself09; 0:X2=P1:Lself10;
+1:X2=0x1; 1:X3=x;
+}
+ P0          | P1                  ;
+ STR W0,[X1] | Lself10:            ;
+ DC CVAU,X1  | B L00               ;
+ DSB ISH     | MOV W0,#2           ;
+ IC IVAU,X1  | B L01               ;
+ DSB ISH     | L00:                ;
+ ISB         | MOV W0,#1           ;
+ STR W0,[X2] | L01:                ;
+             | EOR W1,W0,W0        ;
+             | STR W2,[X3,W1,SXTW] ;
+             | LDR W4,[X3]         ;
+             | CBNZ W4,LC02        ;
+             | LC02:               ;
+             | ISB                 ;
+             | Lself09:            ;
+             | B L03               ;
+             | MOV W5,#2           ;
+             | B L04               ;
+             | L03:                ;
+             | MOV W5,#1           ;
+             | L04:                ;
+exists
+(1:X0=0x2 /\ 1:X4=0x1 /\ 1:X5=0x1)

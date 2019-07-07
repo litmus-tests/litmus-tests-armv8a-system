@@ -1,0 +1,25 @@
+AArch64 WR+WR+WF+po+rfi+dmb.sy
+"PodWR Fre Rfi Fre DMB.SYdWR Fife"
+Cycle=Rfi Fre DMB.SYdWR Fife PodWR Fre
+Relax=Fife
+Safe=Rfi Fre PodWR DMB.SYdWR
+Generator=diy7 (version 7.52+10(dev))
+Com=Fr Fr Fif
+Orig=PodWR Fre Rfi Fre DMB.SYdWR Fife
+{
+0:X0=0x14000001; 0:X1=P2:Lself65; 0:X3=x;
+1:X0=0x1; 1:X1=x;
+2:X0=0x2; 2:X1=x;
+}
+ P0          | P1          | P2          ;
+ STR W0,[X1] | STR W0,[X1] | STR W0,[X1] ;
+ LDR W2,[X3] | LDR W2,[X1] | DMB SY      ;
+             |             | Lself65:    ;
+             |             | B L00       ;
+             |             | MOV W2,#2   ;
+             |             | B L01       ;
+             |             | L00:        ;
+             |             | MOV W2,#1   ;
+             |             | L01:        ;
+exists
+(x=0x2 /\ 0:X2=0x0 /\ 1:X2=0x1 /\ 2:X2=0x1)
