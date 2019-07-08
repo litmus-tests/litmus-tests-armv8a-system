@@ -1,0 +1,17 @@
+AArch64 W+F+branches
+
+
+(* 0x54000041 == B.NE f *)
+
+{
+0:X0=0x54000041; 0:X1=P1:L1;
+}
+ P0           | P1           ;
+  STR W0,[X1] | CMP X0,#1    ;
+              | L1: B.EQ g   ;
+              | f: B Lout    ;
+              | g: MOV X1,#1 ;
+              | Lout:        ;
+
+(* this result is only possible if the above executed B.NE g *)
+exists 1:X1=1

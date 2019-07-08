@@ -1,0 +1,30 @@
+AArch64 MP.RF+dmb+addr-cachesync
+
+{
+int64_t x;
+int64_t z;
+0:X0=0x14000001; 0:X1=P1:f; 0:X2=1; 0:X3=x;
+1:X2=x; 1:X5=z; 1:X6=P1:f;
+}
+ P0           | P1               ;
+STR W0,[X1]   |   LDR X0,[X2]    ;
+DMB SY        |   EOR X3,X0,X0   ;
+STR X2,[X3]   |   LDR X4,[X5,X3] ;
+              |   DC CVAU,X6     ;
+              |   DSB ISH        ;
+              |   IC IVAU,X6     ;
+              |   DSB ISH        ;
+              |   ISB            ;
+              |   BL f           ;
+              |   MOV X1,X10     ;
+              |   B Lout         ;
+              | f:               ;
+              |   B l0           ;
+              | l1:              ;
+              |   MOV X10,#2     ;
+              |   RET            ;
+              | l0:              ;
+              |   MOV X10,#1     ;
+              |   RET            ;
+              | Lout:            ;
+~exists 1:X0=1 /\ 1:X1=1

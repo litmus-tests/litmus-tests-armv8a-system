@@ -3,19 +3,21 @@ AArch64 CoFF
 (* 0x14000001 = B +1 *)
 
 {
-0:X0=0x14000001; 0:X1=P1:L1;
+0:X0=0x14000001; 0:X1=P1:f;
 }
- P0             |  P1             ;
-   STR W0,[X1]  |    BL L1        ;
-                |    MOV X8,X9    ;
-                |    BL L1        ;
-                |    B Lout       ;
-                | L1:             ;
-                |    B Lfail      ;
-                |    MOV X9,#1    ;
-                |    RET          ;
-                | Lfail:          ;
-                |    MOV X9,#0    ;
-                |    RET          ;
-                | Lout:           ;
-exists 1:X8=1 /\ 1:X9=0
+ P0             |  P1           ;
+   STR W0,[X1]  |    BL f       ;
+                |    MOV X0,X10 ;
+                |    BL f       ;
+                |    MOV X1,X10 ;
+                |    B Lout     ;
+                | f:            ;
+                |    B l0       ;
+                | l1:           ;
+                |    MOV X10,#2 ;
+                |    RET        ;
+                | l0:           ;
+                |    MOV X10,#1 ;
+                |    RET        ;
+                | Lout:         ;
+exists 1:X0=2 /\ 1:X1=1

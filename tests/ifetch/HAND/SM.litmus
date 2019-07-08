@@ -1,15 +1,20 @@
 AArch64 SM
 
 {
-0:X0=0x14000001; 0:X1=P0:L1;
+0:X0=0x14000001; 0:X1=P0:f;
 }
  P0           ;
   STR W0,[X1] ;
-L1:           ;
-  B Lfail     ;
-  MOV X9,#1   ;
+  BL f        ;
+  MOV X1,X10  ;
   B Lout      ;
-Lfail:        ;
-  MOV X9,#0   ;
+f:            ;
+   B l0       ;
+l1:           ;
+   MOV X10,#2 ;
+   RET        ;
+l0:           ;
+   MOV X10,#1 ;
+   RET        ;
 Lout:         ;
-exists 0:X9=0
+exists 0:X1=1

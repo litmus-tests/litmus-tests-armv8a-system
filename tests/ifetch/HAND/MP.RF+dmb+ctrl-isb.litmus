@@ -7,11 +7,11 @@ int64_t x;
 }
  P0           | P1            ;
 STR W0,[X1]   |   LDR X0,[X2] ;
-DC CVAU,X1    |   CBNZ X0,l   ;
-DSB ISH       | l:            ;
-IC IVAU,X1    |   ISB         ;
-DSB ISH       |   BL f        ;
-STR X2,[X3]   |   MOV X1,X10  ;
+DMB SY        |   CBNZ X0,l   ;
+STR X2,[X3]   | l:            ;
+              |   ISB         ;
+              |   BL f        ;
+              |   MOV X1,X10  ;
               |   B Lout      ;
               | f:            ;
               |   B l0        ;
@@ -22,5 +22,4 @@ STR X2,[X3]   |   MOV X1,X10  ;
               |   MOV X10,#1  ;
               |   RET         ;
               | Lout:         ;
-
-~exists 1:X0=1 /\ 1:X1=1
+exists 1:X0=1 /\ 1:X1=1

@@ -1,4 +1,4 @@
-AArch64 MP.RFF+dc-dsb+ctrl-isb-isb
+AArch64 MP.RF+dc+ctrl-isb-isb
 
 Stable=X10
 

@@ -1,0 +1,13 @@
+AArch64 W+F
+
+(* 0xd1000400 == SUB X0,X0,#1 *)
+{
+0:X0=0xd1000400; 0:X1=P1:L1;
+}
+ P0           | P1               ;
+  STR W0,[X1] | L1: ADD X0,X0,#1 ;
+
+(* there is no assertion for unpredictable behaviour, so just assert that there exists an
+ * execution that does not succeed *)
+exists false
+    /\ 1:X0=0  (* actually show the observed values for X0 on hardware output logs *)

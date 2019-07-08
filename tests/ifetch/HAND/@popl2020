@@ -1,0 +1,17 @@
+CoFF.litmus
+CoFR.litmus
+CoRF+ctrl-isb.litmus
+SM.litmus
+SM+cachesync-isb.litmus
+MP.RF+dmb+ctrl-isb.litmus
+MP.RF+cachesync+ctrl-isb.litmus
+MP.FR+dmb+fpo-fe.litmus
+MP.FF+dmb+fpo.litmus
+MP.FF+cachesync+fpo.litmus
+ISA2.F+dc+ic+ctrl-isb.litmus
+MP.RF+[dc]-ic+ctrl-isb.litmu s
+SM.F+ic.litmus
+FOW.litmus
+MP.RF+dc+ctrl-isb-isb.litmus
+MP.R.RF+addr-cachesync+dmb+ctrl-isb.litmus
+MP.RF+dmb+addr-cachesync.litmus
