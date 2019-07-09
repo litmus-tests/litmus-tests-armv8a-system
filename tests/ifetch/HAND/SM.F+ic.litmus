@@ -1,6 +1,6 @@
 AArch64 SM.F+ic
 
-Stable=X9
+Stable=X10
 
 {
 int64_t x;
