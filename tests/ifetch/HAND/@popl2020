@@ -9,7 +9,7 @@ MP.FR+dmb+fpo-fe.litmus
 MP.FF+dmb+fpo.litmus
 MP.FF+cachesync+fpo.litmus
 ISA2.F+dc+ic+ctrl-isb.litmus
-MP.RF+[dc]-ic+ctrl-isb.litmu s
+MP.RF+[dc]-ic+ctrl-isb.litmus
 SM.F+ic.litmus
 FOW.litmus
 MP.RF+dc+ctrl-isb-isb.litmus
