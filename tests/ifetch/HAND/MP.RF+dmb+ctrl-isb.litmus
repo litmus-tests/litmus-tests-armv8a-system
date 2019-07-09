@@ -1,4 +1,4 @@
-AArch64 MP.RF+cachesync+ctrl-isb
+AArch64 MP.RF+dmb+ctrl-isb
 
 {
 int64_t x;
