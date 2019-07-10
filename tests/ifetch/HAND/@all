@@ -42,3 +42,10 @@ WRC.F.RF.litmus
 WRC.F.RF+po+ctrl-isb.litmus
 WRC.F.RR+po+dmb.litmus
 WRC.R.RF+addr+addr-cachesync-isb.litmus
+### madd7 @all @popl2020
+MP.RF+dmb+ctrl-isb.litmus
+ISA2.F+dc+ic+ctrl-isb.litmus
+MP.RF+[dc]-ic+ctrl-isb.litmus
+MP.RF+dc+ctrl-isb-isb.litmus
+MP.RF+dmb+addr-cachesync.litmus
+
