@@ -1,4 +1,4 @@
-AArch64 MP.FR+dmb+po
+AArch64 MP.FR+dmb+fpo-fe
 
 {
 int64_t x;

@@ -1,4 +1,4 @@
-AArch64 MP.FF+cachesyncstrong+po
+AArch64 MP.FF+cachesyncstrong+fpo
 "CacheSyncStrongdWW Iffe PodRR Fife"
 Generator=diyone7 (version 7.52+10(dev))
 Com=Iff Fif

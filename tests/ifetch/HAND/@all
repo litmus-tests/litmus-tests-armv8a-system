@@ -9,11 +9,11 @@ ISA2.F+dc-dmb+dsb-ic-dsb+ctrl-isb.litmus
 ISA2.F+dc-dsb+dsb-ic-dsb+ctrl-isb.litmus
 ISA2.F+dmb+cachesync+ctrl-isb.litmus
 ISA2.F+dmb+dsb-cachesync+ctrl-isb.litmus
-MP.FF+cachesync+po.litmus
-MP.FF+cachesyncstrong+po.litmus
-MP.FF+dmb+po.litmus
+MP.FF+cachesync+fpo.litmus
+MP.FF+cachesyncstrong+fpo.litmus
+MP.FF+dmb+fpo.litmus
 MP.FF.litmus
-MP.FR+dmb+po.litmus
+MP.FR+dmb+fpo-fe.litmus
 MP.RF+cachesync+ctrl-isb.litmus
 MP.RF+cachesync+ctrl.litmus
 MP.RF+dc+ctrl-isb.litmus
