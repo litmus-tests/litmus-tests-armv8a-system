@@ -3,26 +3,25 @@ AArch64 SM.F+ic
 Stable=X10
 
 {
-int64_t x;
 0:X0=0x14000001; 0:X4=P0:f; 0:X3=x;
 1:X1=P0:f; 1:X2=1; 1:X3=x;
 }
   P0           | P1          ;
    STR W0,[X4] | BLR X1      ;
-   LDR X2,[X3] | MOV X0,X10  ;
-   CBZ X2, l   | IC IVAU, X1 ;
+   LDR W2,[X3] | MOV W0,W10  ;
+   CBZ W2, l   | IC IVAU, X1 ;
 l:             | DSB SY      ;
-   ISB         | STR X2,[X3] ;
+   ISB         | STR W2,[X3] ;
    BL f        |             ;
-   MOV X1,X10  |             ;
+   MOV W1,W10  |             ;
    B Lout      |             ;
 f:             |             ;
    B l0        |             ;
 l1:            |             ;
-   MOV X10,#2  |             ;
+   MOV W10,#2  |             ;
    RET         |             ;
 l0:            |             ;
-   MOV X10,#1  |             ;
+   MOV W10,#1  |             ;
    RET         |             ;
 Lout:          |             ;
 exists (1:X0=2 /\ 0:X2=1 /\ 0:X1=1)

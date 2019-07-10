@@ -8,25 +8,25 @@ AArch64 MP.FF+cachesync+fpo
 }
  P0          | P1           ;
 STR W0,[X1]  | BL f1        ;
-DC CVAU,X1   | MOV X0,X10   ;
+DC CVAU,X1   | MOV W0,W11   ;
 DSB ISH      | BL f0        ;
-IC IVAU,X1   | MOV X1,X10   ;
+IC IVAU,X1   | MOV W1,W10   ;
 DSB ISH      | B Lout       ;
 STR W2,[X3]  | f0:          ;
              |   B l00      ;
              | l01:         ;
-             |   MOV X10,#2 ;
+             |   MOV W10,#2 ;
              |   RET        ;
              | l00:         ;
-             |   MOV X10,#1 ;
+             |   MOV W10,#1 ;
              |   RET        ;
              | f1:          ;
              |   B l10      ;
              | l11:         ;
-             |   MOV X10,#2 ;
+             |   MOV W11,#2 ;
              |   RET        ;
              | l10:         ;
-             |   MOV X10,#1 ;
+             |   MOV W11,#1 ;
              |   RET        ;
              | Lout:        ;
 ~exists (1:X0=2 /\ 1:X1=1)

@@ -1,25 +1,24 @@
 AArch64 MP.RF+cachesync+ctrl-isb
 
 {
-int64_t x;
 0:X0=0x14000001; 0:X1=P1:f; 0:X2=1; 0:X3=x;
 1:X2=x;
 }
  P0           | P1            ;
-STR W0,[X1]   |   LDR X0,[X2] ;
-DC CVAU,X1    |   CBNZ X0,l   ;
+STR W0,[X1]   |   LDR W0,[X2] ;
+DC CVAU,X1    |   CBNZ W0,l   ;
 DSB ISH       | l:            ;
 IC IVAU,X1    |   ISB         ;
 DSB ISH       |   BL f        ;
-STR X2,[X3]   |   MOV X1,X10  ;
+STR W2,[X3]   |   MOV W1,W10  ;
               |   B Lout      ;
               | f:            ;
               |   B l0        ;
               | l1:           ;
-              |   MOV X10,#2  ;
+              |   MOV W10,#2  ;
               |   RET         ;
               | l0:           ;
-              |   MOV X10,#1  ;
+              |   MOV W10,#1  ;
               |   RET         ;
               | Lout:         ;
 

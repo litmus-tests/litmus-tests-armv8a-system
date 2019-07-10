@@ -6,29 +6,28 @@ Stable=X10
 (* 0x14000003 = B +3 *)
 
 {
-int64_t x;
 0:X0=0x14000003; 0:X1=0x14000001; 0:X2=P0:g;
 0:X3=1; 0:X4=x;
 1:X4=x; 1:X5=P0:g;
 }
 
 P0            | P1             ;
-  STR W0,[X2] |   LDR X0,[X4]  ;
-  STR W1,[X2] |   CBNZ X0,l    ;
+  STR W0,[X2] |   LDR W0,[X4]  ;
+  STR W1,[X2] |   CBNZ W0,l    ;
   DC CVAU,X2  | l:             ;
   DSB ISH     |   ISB          ;
-  STR X3,[X4] |   BLR X5       ;
-  B Lout      |   MOV X1,X10   ;
+  STR W3,[X4] |   BLR X5       ;
+  B Lout      |   MOV W1,W10   ;
 g:            |   ISB          ;
    B l0       |   BLR X5       ;
-l2:           |   MOV X2,X10   ;
-   MOV X10,#3 |   ISB          ;
+l2:           |   MOV W2,W10   ;
+   MOV W10,#3 |   ISB          ;
    RET        |   BLR X5       ;
-l1:           |   MOV X3,X10   ;
-   MOV X10,#2 |                ;
+l1:           |   MOV W3,W10   ;
+   MOV W10,#2 |                ;
    RET        |                ;
 l0:           |                ;
-   MOV X10,#1 |                ;
+   MOV W10,#1 |                ;
    RET        |                ;
 Lout:         |                ;
 exists 1:X0=1 /\ 1:X1=3 /\ 1:X2=2 /\ 1:X3=1
