@@ -1,13 +1,14 @@
 AArch64 WRC.F.FF
 
 Stable=X9
-
+Hash=18dbe56b63bd57cfd44ede5f789dbc14
 {
 0:X0=0x14000001; 0:X1=P1:L2;
 1:X0=0x14000001; 1:X1=P2:L3;
 2:X1=P1:L2;
 }
  P0            | P1           | P2         ;
+               |              | MOV X9,#2  ;
 STR W0, [X1]   | BL L2        | L3:        ;
                | STR W0, [X1] | B Lfail_L3 ;
                | B Lout       | MOV X8, #1 ;
@@ -19,5 +20,7 @@ STR W0, [X1]   | BL L2        | L3:        ;
                | MOV X9, #0   |            ;
                | RET          |            ;
                | Lout:        |            ;
-(* need the 1:X9 here to make test not crash *)
+(* need the 1:X9 here to make test not crash,
+   need the explicit initialisation of 2:X9 to force allocation of X9 to X9
+   in P2. *)
 exists (1:X9=1 /\ 2:X8=1 /\ 2:X9=0)

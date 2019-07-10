@@ -12,15 +12,15 @@ AArch64 SM+cachesync-isb
   DSB ISH     ;
   ISB         ;
   BL f        ;
-  MOV X1,X10  ;
+  MOV W2,W10  ;
   B Lout      ;
 f:            ;
    B l0       ;
 l1:           ;
-   MOV X10,#2 ;
+   MOV W10,#2 ;
    RET        ;
 l0:           ;
-   MOV X10,#1 ;
+   MOV W10,#1 ;
    RET        ;
 Lout:         ;
-~exists 0:X1=0
+~exists 0:X2=0
