@@ -8,9 +8,9 @@ AArch64 MP.R.RF+addr-cachesync+dmb+ctrl-isb
 2:X1=y;
 }
  P0           | P1          | P2          ;
-LDR W0,[X1]   | LDR W0,[X3] | L2:         ;
-STR W2,[X3]   | STR W1,[X3] | LDR W0,[X1] ;
-EOR X4,X0,X0  | DMB SY      | CBZ W0,L2   ;
+LDR W0,[X1]   | LDR W0,[X3] | LDR W0,[X1] ;
+STR W2,[X3]   | STR W1,[X3] | CBZ W0,L2   ;
+EOR X4,X0,X0  | DMB SY      | L2:         ;
 ADD X4,X4,X3  | MOV W4,#1   | ISB         ;
 DC CVAU, X4   | STR W4,[X5] | L3:         ;
 DSB SY        |             | B Lfail1    ;
