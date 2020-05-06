@@ -23,4 +23,4 @@ STR W5,[X6]   |             | MOV W9,#1   ;
               |             | MOV W9,#2   ;
               |             | B Lout      ;
               |             | Lout:       ;
-~exists (1:X0=0x1400005 /\ 2:X9=2 /\ 2:X0=1)  (* in the model *)
+~exists (0:X0=1 /\ 1:X0=0x14000005 /\ 2:X9=2 /\ 2:X0=1)  (* in the model *)
