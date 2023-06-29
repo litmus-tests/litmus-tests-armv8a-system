@@ -1,0 +1,62 @@
+arch = "AArch64"
+name = "MP.FF+cachesync+fpo"
+hash = "bad9050fa6415ea39883e5265cc91690"
+symbolic = []
+
+[[self_modify]]
+address = "f0:"
+bytes = 4
+values = [
+  "0x14000001",
+  "0x14000003"
+]
+
+[[self_modify]]
+address = "f1:"
+bytes = 4
+values = [
+  "0x14000001",
+  "0x14000003"
+]
+
+[thread.0]
+init = { X3 = "f1:", X2 = "0x14000001", X1 = "f0:", X0 = "0x14000001" }
+code = """
+	STR W0,[X1]
+	DC CVAU,X1
+	DSB ISH
+	IC IVAU,X1
+	DSB ISH
+	STR W2,[X3]
+"""
+
+[thread.1]
+init = {  }
+code = """
+	BL f1
+	MOV W0,W11
+	BL f0
+	MOV W1,W10
+	B Lout
+f0:
+	B l00
+l01:
+	MOV W10,#2
+	RET
+l00:
+	MOV W10,#1
+	RET
+f1:
+	B l10
+l11:
+	MOV W11,#2
+	RET
+l10:
+	MOV W11,#1
+	RET
+Lout:
+"""
+
+[final]
+expect = "unsat"
+assertion = "1:X0 = 2 & 1:X1 = 1"

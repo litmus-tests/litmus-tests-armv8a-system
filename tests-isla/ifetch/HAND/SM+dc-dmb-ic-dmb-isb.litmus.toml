@@ -1,0 +1,34 @@
+arch = "AArch64"
+name = "SM+dc-dmb-ic-dmb-isb"
+hash = "3ef54ad7d565acfbc5dea8d218da861d"
+symbolic = []
+
+[[self_modify]]
+address = "L1:"
+bytes = 4
+values = [
+  "0x14000001",
+  "0x14000003"
+]
+
+[thread.0]
+init = { X1 = "L1:", X0 = "0x14000001" }
+code = """
+	STR W0,[X1]
+	DC CVAU,X1
+	DMB SY
+	IC IVAU,X1
+	DMB SY
+	ISB
+L1:
+	B Lfail
+	MOV X9,#1
+	B Lout
+Lfail:
+	MOV X9,#0
+Lout:
+"""
+
+[final]
+expect = "sat"
+assertion = "0:X9 = 0"

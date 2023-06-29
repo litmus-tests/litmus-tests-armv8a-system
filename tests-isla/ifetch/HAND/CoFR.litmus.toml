@@ -1,0 +1,40 @@
+arch = "AArch64"
+name = "CoFR"
+hash = "4127f7526c72d36449cfc43d9015534d"
+symbolic = []
+
+[[self_modify]]
+address = "f:"
+bytes = 4
+values = [
+  "0x14000001",
+  "0x14000003"
+]
+
+[thread.0]
+init = { X1 = "f:", X0 = "0x14000001" }
+code = """
+	STR W0,[X1]
+"""
+
+[thread.1]
+init = { X2 = "f:" }
+code = """
+	BL f
+	MOV W0,W10
+	LDR W1,[X2]
+	B Lout
+f:
+	B l0
+l1:
+	MOV W10,#2
+	RET
+l0:
+	MOV W10,#1
+	RET
+Lout:
+"""
+
+[final]
+expect = "unsat"
+assertion = "1:X0 = 2 & 1:X1 = 0x14000003"

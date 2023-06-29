@@ -1,0 +1,30 @@
+arch = "AArch64"
+name = "SM+isb"
+hash = "f2c4a22d8ed41e42d1bbdd58271ffddb"
+symbolic = []
+
+[[self_modify]]
+address = "L1:"
+bytes = 4
+values = [
+  "0x14000001",
+  "0x14000003"
+]
+
+[thread.0]
+init = { X1 = "L1:", X0 = "0x14000001" }
+code = """
+	STR W0,[X1]
+	ISB
+L1:
+	B Lfail
+	MOV X9,#1
+	B Lout
+Lfail:
+	MOV X9,#0
+Lout:
+"""
+
+[final]
+expect = "sat"
+assertion = "0:X9 = 0"

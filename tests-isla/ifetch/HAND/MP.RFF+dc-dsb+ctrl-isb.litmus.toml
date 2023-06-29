@@ -1,0 +1,58 @@
+arch = "AArch64"
+name = "MP.RFF+dc-dsb+ctrl-isb"
+hash = "d1abff2ad6e5e15bfe5a5f5516874868"
+stable = "X9"
+symbolic = ["x"]
+
+[[self_modify]]
+address = "L1:"
+bytes = 4
+values = [
+  "0x14000001",
+  "0x14000003"
+]
+
+[locations]
+"x" = "0"
+
+[types]
+"x" = "int64_t"
+
+[thread.0]
+init = { X4 = "x", X2 = "L1:", X1 = "0x14000001", X0 = "0x14000005" }
+code = """
+	STR W0,[X2]
+	STR W1,[X2]
+	DC CVAU, X2
+	DSB SY
+	MOV X3,#1
+	STR X3,[X4]
+"""
+
+[thread.1]
+init = { X1 = "x" }
+code = """
+LC00:
+	LDR X0,[X1]
+	CBZ X0,LC00
+	ISB
+	BL L1
+	MOV X8,X9
+	BL L1
+	B Lout
+L1:
+	B Lfail1
+	MOV X9,#3
+	RET
+Lfail1:
+	MOV X9,#1
+	RET
+Lfail2:
+	MOV X9,#2
+	RET
+Lout:
+"""
+
+[final]
+expect = "sat"
+assertion = "1:X8 = 3 & 1:X9 = 2"

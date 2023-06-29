@@ -1,0 +1,37 @@
+arch = "AArch64"
+name = "W+F+branches"
+hash = "81d81cb5e50348909529febab8422a40"
+symbolic = []
+
+[[self_modify]]
+address = "L1:"
+bytes = 4
+values = [
+  "0x54000020",
+  "0x54000040",
+  "0x54000021",
+  "0x54000041"
+]
+
+[thread.0]
+init = { X1 = "L1:", X0 = "0x54000041" }
+code = """
+	STR W0,[X1]
+"""
+
+[thread.1]
+init = {  }
+code = """
+	CMP X0,#1
+L1:
+	B.EQ g
+f:
+	B Lout
+g:
+	MOV X1,#1
+Lout:
+"""
+
+[final]
+expect = "sat"
+assertion = "1:X1 = 1"

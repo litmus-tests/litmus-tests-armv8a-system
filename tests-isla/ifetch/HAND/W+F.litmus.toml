@@ -1,0 +1,29 @@
+arch = "AArch64"
+name = "W+F"
+hash = "336c9c58c62ee8d2eb646a25531dae0d"
+symbolic = []
+
+[[self_modify]]
+address = "L1:"
+bytes = 4
+values = [
+  "0x91000400",
+  "0xd1000400"
+]
+
+[thread.0]
+init = { X1 = "L1:", X0 = "0xd1000400" }
+code = """
+	STR W0,[X1]
+"""
+
+[thread.1]
+init = {  }
+code = """
+L1:
+	ADD X0,X0,#1
+"""
+
+[final]
+expect = "sat"
+assertion = "false & 1:X0 = 0"

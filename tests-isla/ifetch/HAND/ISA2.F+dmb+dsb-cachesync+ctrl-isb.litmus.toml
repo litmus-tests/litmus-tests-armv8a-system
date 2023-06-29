@@ -1,0 +1,62 @@
+arch = "AArch64"
+name = "ISA2+dmb+dsb-cachesync+ctrl-isb"
+hash = "dea966f3a9ac3993c04440874a665800"
+symbolic = ["x", "y"]
+
+[[self_modify]]
+address = "L1:"
+bytes = 4
+values = [
+  "0x14000001",
+  "0x14000003"
+]
+
+[locations]
+"x" = "0"
+"y" = "0"
+
+[types]
+"x" = "int64_t"
+"y" = "int64_t"
+
+[thread.0]
+init = { X3 = "x", X1 = "L1:", X0 = "0x14000001" }
+code = """
+	STR W0,[X1]
+	DMB SY
+	MOV X2,#1
+	STR X2,[X3]
+"""
+
+[thread.1]
+init = { X5 = "y", X3 = "x", X1 = "L1:" }
+code = """
+	LDR X0,[X3]
+	DSB ISH
+	DC CVAU,X1
+	DSB ISH
+	IC IVAU,X1
+	DSB ISH
+	MOV X4,#1
+	STR X4,[X5]
+"""
+
+[thread.2]
+init = { X5 = "y" }
+code = """
+	LDR X0,[X5]
+	CBZ X0,LC00
+LC00:
+	ISB
+L1:
+	B Lfail
+	MOV X9,#1
+	B Lout
+Lfail:
+	MOV X9,#0
+Lout:
+"""
+
+[final]
+expect = "unsat"
+assertion = "1:X0 = 1 & 2:X0 = 1 & 2:X9 = 0"

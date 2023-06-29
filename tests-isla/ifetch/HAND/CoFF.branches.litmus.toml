@@ -1,0 +1,45 @@
+arch = "AArch64"
+name = "CoFF.branches"
+hash = "32de48e2b794be8a32f2f03ea0afb4d7"
+symbolic = []
+
+[[self_modify]]
+address = "L1:"
+bytes = 4
+values = [
+  "0x14000001",
+  "0x14000003"
+]
+
+
+[thread.0]
+init = { X1 = "L1:", X0 = "0x14000001" }
+code = """
+	STR W0,[X1]
+"""
+
+[thread.1]
+init = {  }
+code = """
+	MOV X0,#0
+	B L1
+	MOV X8,X9
+L2:
+	B L1
+L1:
+	B Lfail
+	MOV X9,#1
+	B Lloop
+Lfail:
+	MOV X9,#0
+	B Lloop
+Lloop:
+	CBNZ X0,Lout
+	MOV X0,#1
+	B L2
+Lout:
+"""
+
+[final]
+expect = "sat"
+assertion = "1:X8 = 1 & 1:X9 = 0"

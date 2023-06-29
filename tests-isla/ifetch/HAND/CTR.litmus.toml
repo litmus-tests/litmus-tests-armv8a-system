@@ -1,0 +1,19 @@
+arch = "AArch64"
+name = "CTR"
+hash = "0ac233c8f5b5b768f1bb4951ea234a7d"
+symbolic = []
+
+[thread.0]
+init = {  }
+code = """
+	MRS x0, CTR_EL0
+	RBIT x0, x0
+	TST x0, #4
+	CSET w1, NE
+	TST x0, #8
+	CSET w2, NE
+"""
+
+[final]
+expect = "sat"
+assertion = "0:X1 = 0 & 0:X2 = 0"

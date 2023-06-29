@@ -1,0 +1,64 @@
+arch = "AArch64"
+name = "MP.RFF+dc-dsb+ctrl-isb-isb"
+hash = "da750813492fa01ca3e64af3d94e4a93"
+stable = "X10"
+symbolic = ["x"]
+
+[[self_modify]]
+address = "g:"
+bytes = 4
+values = [
+  "0x14000001",
+  "0x14000003",
+  "0x14000005"
+]
+
+[locations]
+"x" = "0"
+
+[types]
+"x" = "int64_t"
+
+[thread.0]
+init = { X4 = "x", X3 = "1", X2 = "g:", X1 = "0x14000003", X0 = "0x14000001" }
+code = """
+	STR W0,[X2]
+	STR W1,[X2]
+	DC CVAU,X2
+	DSB ISH
+	STR X3,[X4]
+	B Lout
+g:
+	B l0
+l2:
+	MOV X10,#3
+	RET
+l1:
+	MOV X10,#2
+	RET
+l0:
+	MOV X10,#1
+	RET
+Lout:
+"""
+
+[thread.1]
+init = { X5 = "g:", X4 = "x" }
+code = """
+	LDR X0,[X4]
+	CBNZ X0,l
+l:
+	ISB
+	BLR X5
+	MOV X1,X10
+	ISB
+	BLR X5
+	MOV X2,X10
+	ISB
+	BLR X5
+	MOV X3,X10
+"""
+
+[final]
+expect = "sat"
+assertion = "1:X0 = 1 & 1:X1 = 3 & 1:X2 = 2 & 1:X3 = 1"

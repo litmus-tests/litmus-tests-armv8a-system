@@ -1,0 +1,50 @@
+arch = "AArch64"
+name = "MP.FF"
+hash = "152017c7bdca7d7f80a3f1e44cc67b54"
+symbolic = []
+
+[[self_modify]]
+address = "L2:"
+bytes = 4
+values = [
+  "0x14000001",
+  "0x14000003"
+]
+
+[[self_modify]]
+address = "L3:"
+bytes = 4
+values = [
+  "0x14000001",
+  "0x14000004"
+]
+
+[thread.0]
+init = { X1 = "L2:", X2 = "L3:", X0 = "0x14000001" }
+code = """
+	STR W0, [X2]
+	STR W0, [X1]
+"""
+
+[thread.1]
+init = {  }
+code = """
+	MOV X9, #1
+	MOV X10, #1
+L2:
+	B Lfail_L2
+L3:
+	B Lfail_L3
+	B Lout
+Lfail_L2:
+	MOV X9, #0
+	B L3
+Lfail_L3:
+	MOV X10, #0
+	B Lout
+Lout:
+"""
+
+[final]
+expect = "sat"
+assertion = "1:X9 = 1 & 1:X10 = 0"

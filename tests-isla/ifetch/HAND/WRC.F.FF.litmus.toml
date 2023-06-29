@@ -1,0 +1,61 @@
+arch = "AArch64"
+name = "WRC.F.FF"
+stable = "X9"
+hash = "18dbe56b63bd57cfd44ede5f789dbc14"
+symbolic = []
+
+[[self_modify]]
+address = "L2:"
+bytes = 4
+values = [
+  "0x14000001",
+  "0x14000003"
+]
+
+[[self_modify]]
+address = "L3:"
+bytes = 4
+values = [
+  "0x14000001",
+  "0x14000004"
+]
+
+[thread.0]
+init = { X1 = "L2:", X0 = "0x14000001" }
+code = """
+	STR W0, [X1]
+"""
+
+[thread.1]
+init = { X1 = "L3:", X0 = "0x14000001" }
+code = """
+	BL L2
+	STR W0, [X1]
+	B Lout
+L2:
+	B Lfail_L2
+	MOV X9, #1
+	RET
+Lfail_L2:
+	MOV X9, #0
+	RET
+Lout:
+"""
+
+[thread.2]
+init = { X1 = "L2:" }
+code = """
+	MOV X9,#2
+L3:
+	B Lfail_L3
+	MOV X8, #1
+	BLR X1
+	B L2out
+Lfail_L3:
+	MOV X8, #0
+L2out:
+"""
+
+[final]
+expect = "sat"
+assertion = "1:X9 = 1 & 2:X8 = 1 & 2:X9 = 0"

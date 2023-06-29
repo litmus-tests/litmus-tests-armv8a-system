@@ -1,0 +1,60 @@
+arch = "AArch64"
+name = "WRC.R.RF+addr+addr-cachesync-isb"
+hash = "6e9259bcdb90d26e000a17c19200232a"
+symbolic = ["y", "z"]
+
+[[self_modify]]
+address = "L7:"
+bytes = 4
+values = [
+  "0x14000001",
+  "0x14000003"
+]
+
+[locations]
+"y" = "0"
+"z" = "0"
+
+[types]
+"y" = "int64_t"
+"z" = "int64_t"
+
+[thread.0]
+init = { X1 = "L7:", X0 = "0x14000001" }
+code = """
+	STR W0,[X1]
+"""
+
+[thread.1]
+init = { X4 = "y", X1 = "L7:" }
+code = """
+	LDR W0,[X1]
+	EOR X2,X0,X0
+	MOV X3,#1
+	STR X3,[X4,X2]
+"""
+
+[thread.2]
+init = { X5 = "L7:", X4 = "z", X1 = "y" }
+code = """
+	LDR X0,[X1]
+	EOR X2,X0,X0
+	LDR X3,[X4,X2]
+	DC CVAU, X5
+	DSB ISH
+	IC IVAU, X5
+	DSB ISH
+	ISB
+L7:
+	B fail_L7
+	MOV X6,#1
+	B Lout
+fail_L7:
+	MOV X6,#0
+	B Lout
+Lout:
+"""
+
+[final]
+expect = "sat"
+assertion = "1:X0 = 0x14000001 & 2:X0 = 1 & 2:X3 = 0 & 2:X6 = 0"

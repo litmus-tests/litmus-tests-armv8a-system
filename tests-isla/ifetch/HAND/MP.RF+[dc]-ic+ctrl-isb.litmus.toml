@@ -1,0 +1,59 @@
+arch = "AArch64"
+name = "MP.RF+[dc]-ic+ctrl-isb"
+hash = "8185211e8df55af36d78601c87858f25"
+symbolic = ["x", "y"]
+
+[[self_modify]]
+address = "f:"
+bytes = 4
+values = [
+  "0x14000001",
+  "0x14000003"
+]
+
+[thread.0]
+init = { X5 = "y", X3 = "x", X2 = "1", X1 = "f:", X0 = "0x14000001" }
+code = """
+	STR W0,[X1]
+	DMB SY
+	LDR W4,[X5]
+	DSB ISH
+	IC IVAU,X1
+	DSB ISH
+	STR W2,[X3]
+"""
+
+[thread.1]
+init = { X3 = "y", X2 = "1", X1 = "f:" }
+code = """
+	LDR W0,[X1]
+	DSB ISH
+	DC CVAU,X1
+	DSB ISH
+	STR W2,[X3]
+"""
+
+[thread.2]
+init = { X2 = "x" }
+code = """
+	LDR W0,[X2]
+	CBNZ W0,l
+l:
+	ISB
+	BL f
+	MOV W1,W10
+	B Lout
+f:
+	B l0
+l1:
+	MOV W10,#2
+	RET
+l0:
+	MOV W10,#1
+	RET
+Lout:
+"""
+
+[final]
+expect = "unsat"
+assertion = "1:X0 = 0x14000001 & 0:X4 = 1 & 2:X0 = 1 & 2:X1 = 1"

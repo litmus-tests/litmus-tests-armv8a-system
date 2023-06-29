@@ -1,0 +1,54 @@
+arch = "AArch64"
+name = "WRC.F.RR+po+dmb"
+hash = "908eec255bb177c901bd22a771c38dd9"
+symbolic = ["x"]
+
+[[self_modify]]
+address = "L2:"
+bytes = 4
+values = [
+  "0x14000001",
+  "0x14000003"
+]
+
+[locations]
+"x" = "0"
+
+[types]
+"x" = "int64_t"
+
+[thread.0]
+init = { X1 = "L2:", X0 = "0x14000001" }
+code = """
+	STR W0, [X1]
+"""
+
+[thread.1]
+init = { X2 = "x" }
+code = """
+	BL L2
+	B Lafter
+L2:
+	B Lfail_L2
+	MOV X9, #0
+	RET
+Lfail_L2:
+	MOV X9, #1
+	RET
+Lafter:
+	MOV X1, #1
+	STR X1, [X2]
+Lend:
+"""
+
+[thread.2]
+init = { X4 = "L2:", X2 = "x" }
+code = """
+	LDR X1, [X2]
+	DMB ISH
+	LDR W3, [X4]
+"""
+
+[final]
+expect = "unsat"
+assertion = "1:X9 = 0 & 2:X1 = 1 & 2:X3 = 0x14000003"
