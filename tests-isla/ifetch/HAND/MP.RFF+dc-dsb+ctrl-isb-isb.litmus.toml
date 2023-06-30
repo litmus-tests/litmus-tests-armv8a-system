@@ -17,7 +17,7 @@ values = [
 "x" = "0"
 
 [types]
-"x" = "int64_t"
+"x" = "uint64_t"
 
 [thread.0]
 init = { X4 = "x", X3 = "1", X2 = "g:", X1 = "0x14000003", X0 = "0x14000001" }
