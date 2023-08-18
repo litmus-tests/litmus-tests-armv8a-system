@@ -1,0 +1,5 @@
+errata:
+  - test: SM.F+ic
+    hash: 39cbc4bdd82f9490f20b7a985159b714
+    description: |
+        Fixed by #a7e94af
