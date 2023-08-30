@@ -51,4 +51,4 @@ code = """
 
 [final]
 expect = "unsat"
-assertion = "1:X9 = 0 & 2:X1 = 1 & 2:X3 = 0x14000003"
+assertion = "1:X9 = 0 & 2:X1 = 1 & 2:X3 = extz(0x14000003, 64)"

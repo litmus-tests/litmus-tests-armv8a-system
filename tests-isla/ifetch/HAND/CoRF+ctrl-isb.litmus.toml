@@ -40,4 +40,4 @@ Lout:
 
 [final]
 expect = "sat"
-assertion = "1:X0 = 0x14000001 & 1:X1 = 1"
+assertion = "1:X0 = extz(0x14000001, 64) & 1:X1 = 1"

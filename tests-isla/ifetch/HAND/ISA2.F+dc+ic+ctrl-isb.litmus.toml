@@ -4,7 +4,7 @@ hash = "8d8448026f2fa2f9b3173851a551d482"
 symbolic = ["x", "y"]
 
 [[self_modify]]
-address = "L1:"
+address = "l1:"
 bytes = 4
 values = [
   "0x14000001",

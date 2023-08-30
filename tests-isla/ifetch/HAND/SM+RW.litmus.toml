@@ -55,4 +55,4 @@ code = """
 
 [final]
 expect = "sat"
-assertion = "0:X2 = 1 & 1:X0 = 0x14000005 & 1:X3 = 0x14000001 & 0:X9 = 2"
+assertion = "0:X2 = 1 & 1:X0 = extz(0x14000005, 64) & 1:X3 = extz(0x14000001, 64) & 0:X9 = 2"
